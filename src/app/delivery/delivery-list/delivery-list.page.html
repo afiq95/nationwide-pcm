@@ -1,0 +1,89 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title color="light">Delivery</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content fullscreen>
+  <ion-grid fixed>
+    <ion-row class="ion-align-items-center">
+      <ion-col size="11">
+        <ion-searchbar
+          mode="ios"
+          color="light"
+          placeholder="Type CN Number"
+          (ionChange)="onSearchChange($event)"
+          [debounce]="250"
+        ></ion-searchbar>
+      </ion-col>
+      <ion-col size="1" class="ion-text-left" style="margin-left:-6px ">
+        <ion-icon size="large" color="light" name="qr-scanner"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-list>
+    <ion-item *ngFor="let delivery of deliveries">
+      <ion-checkbox
+        (ionChange)="checkChecked($event, delivery)"
+        [(ngModel)]="delivery.isChecked"
+        class="ion-margin-end"
+        color="secondary"
+      ></ion-checkbox>
+      <ion-label>
+        <p><span class="font-15 roboto-semi-bold">CN No : </span>{{ delivery.consignmentNote }}</p>
+        <p><span class="font-15 roboto-semi-bold">Cust Id : </span>0001234</p>
+        <p><span class="font-15 roboto-semi-bold">Pcs : </span>3</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar
+    style="border-bottom: 1px solid rgba(204,204,204,1)"
+    *ngIf="checked.length != 0"
+    color="medium"
+    class="transition-up"
+  >
+    <ion-grid fixed>
+      <ion-row class="ion-align-items-center">
+        <ion-col size="12" class="ion-text-right">
+          <ion-icon name="close" style="font-size:25px" (click)="clearChecked()"></ion-icon>
+        </ion-col>
+        <ion-col size="8" class="ion-text-left ion-padding-start roboto-semi-bold">
+          You have selected ({{ checked.length }}) CN.
+        </ion-col>
+        <ion-col size="4" class="ion-text-right">
+          <ion-button (click)="proceed()" mode="ios" size="small" shape="round">
+            Proceed
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+  <ion-toolbar color="light">
+    <ion-grid no-padding>
+      <ion-row>
+        <ion-col
+          size="6"
+          class="ion-text-center roboto-semi-bold"
+          style="border-right: 1px rgba(204, 204, 204, 1) solid;"
+        >
+          Pending Task
+          <span
+            style="border: 1px rgba(204, 204, 204, 1) solid;border-radius: 50%;padding:5px 6px 5px 6px"
+          >
+            50
+          </span>
+        </ion-col>
+        <ion-col size="6" class="ion-text-center roboto-semi-bold">
+          Completed Task
+          <span
+            style="border: 1px rgba(204, 204, 204, 1) solid;border-radius: 50%;padding:5px 6px 5px 6px"
+          >
+            50
+          </span>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-footer>

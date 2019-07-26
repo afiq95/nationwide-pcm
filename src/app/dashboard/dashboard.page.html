@@ -1,0 +1,227 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title color="light">Dashboard</ion-title>
+    <!-- <app-master-header slot="end"></app-master-header> -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <ion-grid fixed>
+    <ion-row class="ion-align-items-center">
+      <ion-col class="ion-margin-horizontal" size="5">
+        <ion-text class="roboto-regular" color="light">
+          <h2 class="ion-no-margin">
+            MYKUL00012
+          </h2>
+        </ion-text>
+      </ion-col>
+      <ion-col class="ion-margin-horizontal" size="4">
+        <ion-button filL="outline" shape="round" size="small" color="light" (click)="onClick()">
+          Manage
+        </ion-button>
+      </ion-col>
+      <ion-col class="ion-margin-horizontal" size="12">
+        <ion-text color="light" class="roboto-light">
+          <h6 class="ion-no-margin"><span class="roboto-regular">Branch :</span> Sentul, KL</h6>
+          <h6 class="ion-no-margin">
+            <span class="roboto-regular">Route :</span> Kuala Lumpur, Selangor
+          </h6>
+        </ion-text>
+      </ion-col>
+      <ion-col size="12">
+        <ion-card color="light" mode="ios">
+          <ion-card-header class="ion-text-left">
+            <ion-card-subtitle>
+              <ion-label color="medium" class="coolvetica-regular event-title">
+                Delivery
+              </ion-label>
+            </ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-grid no-padding>
+              <ion-row class="ion-align-items-center">
+                <ion-col size="12">
+                  <ion-grid no-padding>
+                    <ion-row
+                      class="ion-align-items-center"
+                      style="border:1px rgba(204,204,204,1) solid;border-radius:20px;"
+                    >
+                      <ion-col size="8" class="ion-text-left" style="height: 30px">
+                        <ion-label class="ion-margin-start roboto-bold">
+                          Total Delivery
+                        </ion-label>
+                      </ion-col>
+                      <ion-col class="ion-text-right" size="4" style="height: 40px">
+                        <ion-label
+                          color="danger"
+                          class="ion-margin-end roboto-semi-bold"
+                          style="font-size:20px"
+                        >
+                          50
+                        </ion-label>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </ion-col>
+                <ion-col size="5" class="padding-left ion-text-left  ion-no-padding">
+                  <h2 class="roboto-semi-bold">
+                    Completed
+                  </h2>
+                </ion-col>
+                <ion-col size="1" class="status-bar-right ion-no-padding" style="height:35px">
+                </ion-col>
+                <ion-col size="6" class=" ion-no-padding"> </ion-col>
+                <ion-col size="5" color="medium" class="padding-left ion-text-left ion-no-padding">
+                  <ion-label class="roboto-light" color="medium">
+                    Successful
+                  </ion-label>
+                </ion-col>
+                <ion-col size="1" class="status-bar-right ion-no-padding" style="height:35px">
+                </ion-col>
+                <ion-col size="6" class="ion-text-right padding-right ion-no-padding">
+                  <ion-label color="success" class=" roboto-light font-20">
+                    28
+                  </ion-label>
+                </ion-col>
+                <ion-col size="5" color="medium" class="padding-left ion-text-left  ion-no-padding">
+                  <ion-label class="roboto-light" color="medium">
+                    Failed
+                  </ion-label>
+                </ion-col>
+                <ion-col
+                  size="1"
+                  class="status-bar-right ion-no-padding"
+                  style="height:35px"
+                ></ion-col>
+
+                <ion-col size="6" class="ion-text-right padding-right ion-no-padding">
+                  <ion-label color="danger" class=" roboto-light font-20">
+                    2
+                  </ion-label>
+                </ion-col>
+                <ion-col size="5" class="padding-left ion-text-left ion-no-padding">
+                  <h2 class="roboto-semi-bold">
+                    Pending
+                  </h2>
+                </ion-col>
+                <ion-col
+                  size="1"
+                  class="status-bar-right ion-no-padding"
+                  style="height:35px"
+                ></ion-col>
+                <ion-col size="6" class="ion-text-right padding-right ion-no-padding">
+                  <ion-label color="dark" class=" roboto-light font-20">
+                    20
+                  </ion-label>
+                </ion-col>
+                <ion-col size="12" class="ion-text-right">
+                  <ion-button (click)="onClick()" mode="ios" shape="round" size="small">
+                    <ion-icon slot="end" name="arrow-forward" mode="ios"></ion-icon>
+                    View All
+                  </ion-button>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="12" style="margin-top:-35px">
+        <ion-card color="light" mode="ios">
+          <ion-card-header class="ion-text-left">
+            <ion-card-subtitle>
+              <ion-label color="medium" class="coolvetica-regular event-title">
+                Delivery
+              </ion-label>
+            </ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-grid no-padding>
+              <ion-row class="ion-align-items-center">
+                <ion-col size="12">
+                  <ion-grid no-padding>
+                    <ion-row
+                      class="ion-align-items-center"
+                      style="border:1px rgba(204,204,204,1) solid;border-radius:20px;"
+                    >
+                      <ion-col size="8" class="ion-text-left" style="height: 30px">
+                        <ion-label class="ion-margin-start roboto-bold">
+                          Total Delivery
+                        </ion-label>
+                      </ion-col>
+                      <ion-col class="ion-text-right" size="4" style="height: 40px">
+                        <ion-label
+                          color="danger"
+                          class="ion-margin-end roboto-semi-bold"
+                          style="font-size:20px"
+                        >
+                          50
+                        </ion-label>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </ion-col>
+                <ion-col size="5" class="padding-left ion-text-left  ion-no-padding">
+                  <h2 class="roboto-semi-bold">
+                    Completed
+                  </h2>
+                </ion-col>
+                <ion-col size="1" class="status-bar-right ion-no-padding" style="height:35px">
+                </ion-col>
+                <ion-col size="6" class=" ion-no-padding"> </ion-col>
+                <ion-col size="5" color="medium" class="padding-left ion-text-left ion-no-padding">
+                  <ion-label class="roboto-light" color="medium">
+                    Successful
+                  </ion-label>
+                </ion-col>
+                <ion-col size="1" class="status-bar-right ion-no-padding" style="height:35px">
+                </ion-col>
+                <ion-col size="6" class="ion-text-right padding-right ion-no-padding">
+                  <ion-label color="success" class=" roboto-light font-20">
+                    28
+                  </ion-label>
+                </ion-col>
+                <ion-col size="5" color="medium" class="padding-left ion-text-left  ion-no-padding">
+                  <ion-label class="roboto-light" color="medium">
+                    Failed
+                  </ion-label>
+                </ion-col>
+                <ion-col
+                  size="1"
+                  class="status-bar-right ion-no-padding"
+                  style="height:35px"
+                ></ion-col>
+
+                <ion-col size="6" class="ion-text-right padding-right ion-no-padding">
+                  <ion-label color="danger" class=" roboto-light font-20">
+                    2
+                  </ion-label>
+                </ion-col>
+                <ion-col size="5" class="padding-left ion-text-left ion-no-padding">
+                  <h2 class="roboto-semi-bold">
+                    Pending
+                  </h2>
+                </ion-col>
+                <ion-col
+                  size="1"
+                  class="status-bar-right ion-no-padding"
+                  style="height:35px"
+                ></ion-col>
+                <ion-col size="6" class="ion-text-right padding-right ion-no-padding">
+                  <ion-label color="dark" class=" roboto-light font-20">
+                    20
+                  </ion-label>
+                </ion-col>
+                <ion-col size="12" class="ion-text-right">
+                  <ion-button (click)="onClick()" mode="ios" shape="round" size="small">
+                    <ion-icon slot="end" name="arrow-forward" mode="ios"></ion-icon>
+                    View All
+                  </ion-button>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

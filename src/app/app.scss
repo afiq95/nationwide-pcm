@@ -1,6 +1,92 @@
 // App Styles
 // ----------------------------------------------------------------------------
-// Put style rules here that you want to apply to the entire application. These 
-// styles are for the entire app and not just one component. Additionally, this 
-// file can hold Sass mixins, functions, and placeholder classes to be imported 
+// Put style rules here that you want to apply to the entire application. These
+// styles are for the entire app and not just one component. Additionally, this
+// file can hold Sass mixins, functions, and placeholder classes to be imported
 // and used throughout the application.
+
+ion-content {
+  --background: url("../assets/svgs/BG.svg") no-repeat;
+  background-position: 0px 0px;
+}
+
+ion-header {
+  --border-style: none;
+}
+ion-toolbar {
+  --background: rgba(0, 0, 0, 0);
+  --border-style: none;
+}
+.header-md::after {
+  background-image: none;
+}
+
+@font-face {
+  font-family: "Roboto Regular";
+  src: url("../assets/fonts/Roboto/Roboto-Regular.ttf");
+}
+
+@font-face {
+  font-family: "Roboto Bold";
+  src: url("../assets/fonts/Roboto/Roboto-Bold.ttf");
+}
+
+@font-face {
+  font-family: "Roboto Light";
+  src: url("../assets/fonts/Roboto/Roboto-Light.ttf");
+}
+
+@font-face {
+  font-family: "Roboto Semi Bold";
+  src: url("../assets/fonts/Roboto/Roboto-Medium.ttf");
+}
+
+@font-face {
+  font-family: "Roboto Thin";
+  src: url("../assets/fonts/Roboto/Roboto-Thin.ttf");
+}
+
+@font-face {
+  font-family: "Coolvetica Regular";
+  src: url("../assets/fonts/Coolvetica/Rg.ttf");
+}
+
+.roboto-regular {
+  font-family: "Roboto Regular";
+}
+
+.roboto-light {
+  font-family: "Roboto Light";
+}
+
+.roboto-semi-bold {
+  font-family: "Roboto Semi Bold";
+}
+
+.roboto-bold {
+  font-family: "Roboto Bold";
+}
+
+.roboto-thin {
+  font-family: "Roboto Thin";
+}
+
+.coolvetica-regular {
+  font-family: "Coolvetica Regular";
+}
+
+.font-15 {
+  font-size: 15px;
+}
+
+.font-20 {
+  font-size: 20px;
+}
+
+.font-25 {
+  font-size: 25px;
+}
+
+.font-30 {
+  font-size: 30px;
+}
