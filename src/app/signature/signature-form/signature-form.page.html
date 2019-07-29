@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar [myScrollVanish]="scrollArea">
+    <ion-title color="light">Delivery</ion-title>
+    <app-pca-header slot="end"></app-pca-header>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content #scrollArea scrollEvents="true" fullscreen>
+  <ion-card color="light" mode="ios">
+    <ion-card-header>
+      <ion-card-title>Please Sign Below</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid no-padding>
+        <ion-row class="ion-align-items-center">
+          <ion-col size="12">
+            <div style="border: rgba(190,190,190,1) 1px solid;border-radius:15px">
+              <signature-pad [options]="signaturePadOptions"></signature-pad>
+            </div>
+          </ion-col>
+          <ion-col size="6" class="ion-text-center">
+            <ion-button
+              mode="ios"
+              class="button-condensed"
+              shape="round"
+              color="danger"
+            >
+              Cancel
+            </ion-button>
+          </ion-col>
+          <ion-col size="6" class="ion-text-center">
+            <ion-button
+              mode="ios"
+              shape="round"
+              color="primary"
+              class="button-condensed"
+            >
+              Done
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

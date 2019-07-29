@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar color="pcared">
+    <ion-buttons slot="start">
+      <ion-button (click)="dismiss()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Decline Task</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid no-padding style="height:100%">
+    <ion-row style="height:100%" class="ion-align-items-center">
+      <ion-col size="12" class="ion-text-center">
+        <ion-title>Are you sure to decline this task?</ion-title>
+        <ion-title>Inform us why</ion-title>
+        <ion-radio-group [(ngModel)]="selectedReason">
+          <ion-item>
+            <ion-label>Unable to make it in time</ion-label>
+            <ion-radio slot="start" value="No Time"></ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-label>Others</ion-label>
+            <ion-radio slot="start" value="Others"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
+        <ion-item
+          class="ion-margin-top"
+          style="border-radius: 28px; border:rgba(180,180,180,1) 1px solid"
+        >
+          <ion-textarea
+            placeholder="Please Specify"
+            [(ngModel)]="declinedReason"
+            [disabled]="selectedReason != 'Others'"
+          ></ion-textarea>
+        </ion-item>
+        <ion-button
+          shape="round"
+          mode="ios"
+          (click)="post()"
+          class="ion-margin-top button-condensed margin"
+        >
+          Submit
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-toolbar [myScrollVanish]="scrollArea">
+    <ion-buttons slot="start">
+      <ion-back-button mode="ios" icon="ios-arrow-back" text="" color="light"></ion-back-button>
+    </ion-buttons>
+    <ion-title color="light">Delivery</ion-title>
+    <!-- <app-master-header slot="end"></app-master-header> -->
+    <app-pca-header slot="end"></app-pca-header>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content #scrollArea scrollEvents="true" fullscreen scroll-y="true">
+  <ion-card mode="ios" color="light">
+    <ion-card-header>
+      <ion-card-title> Delivery Details </ion-card-title>
+    </ion-card-header>
+    <ion-card-content class="ion-no-padding">
+      <ion-list>
+        <ion-item>
+          <ion-label position="stacked">Delivery Code</ion-label>
+          <ion-select multiple="false" placeholder="Select Delivery Code">
+            <ion-select-option value="success">Successful</ion-select-option>
+            <ion-select-option value="failed">Failed</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Notes</ion-label>
+          <ion-textarea type="text" placeholder="Insert notes regarding delivery"></ion-textarea>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label>Attachment</ion-label>
+        </ion-item>
+        <ion-item lines="none">
+          <div class="camera-box" *ngIf="cameraUrl == ''" (click)="openCamera()"></div>
+          <ion-img [src]="cameraUrl" *ngIf="cameraUrl != ''"></ion-img>
+        </ion-item>
+      </ion-list>
+      <ion-button
+        class="ion-margin-bottom"
+        fill="solid"
+        shape="round"
+        (click)="goToSignature()"
+        expand="block"
+        mode="ios"
+        style="margin-left:auto;margin-right:auto;display: block !important;max-width:70%;max-height:30px"
+      >
+        Signature
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

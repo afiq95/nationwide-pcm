@@ -8,16 +8,7 @@ const routes: Routes = [
     component: TabsPage,
     children: [
       {
-        path: "tab1",
-        children: [
-          {
-            path: "",
-            loadChildren: "../tab1/tab1.module#Tab1PageModule"
-          }
-        ]
-      },
-      {
-        path: "tab2",
+        path: "dashboard",
         children: [
           {
             path: "",
@@ -26,24 +17,38 @@ const routes: Routes = [
         ]
       },
       {
-        path: "tab3",
+        path: "delivery-list",
         children: [
           {
             path: "",
             loadChildren: "../delivery/delivery-list/delivery-list.module#DeliveryListPageModule"
+          },
+          {
+            path: "completed",
+            loadChildren:
+              "../delivery/completed-delivery/completed-delivery.module#CompletedDeliveryPageModule"
+          }
+        ]
+      },
+      {
+        path: "pickup-list",
+        children: [
+          {
+            path: "",
+            loadChildren: "../pickup/pickup-list/pickup-list.module#PickupListPageModule"
           }
         ]
       },
       {
         path: "",
-        redirectTo: "/tabs/tab1",
+        redirectTo: "/tabs/dashboard",
         pathMatch: "full"
       }
     ]
   },
   {
     path: "",
-    redirectTo: "/tabs/tab1",
+    redirectTo: "/tabs/dashboard",
     pathMatch: "full"
   }
 ];

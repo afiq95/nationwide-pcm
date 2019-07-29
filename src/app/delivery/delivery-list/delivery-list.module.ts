@@ -1,15 +1,18 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { Routes, RouterModule } from '@angular/router';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { FormsModule } from "@angular/forms";
+import { Routes, RouterModule } from "@angular/router";
 
-import { IonicModule } from '@ionic/angular';
+import { IonicModule } from "@ionic/angular";
 
-import { DeliveryListPage } from './delivery-list.page';
+import { DeliveryListPage } from "./delivery-list.page";
+import { HeaderTrasformDirective } from "src/app/directive/header-trasform.directive";
+import { HeaderTrasformDirectiveModule } from "src/app/directive/header-trasform.directive.module";
+import { PcaHeaderComponentModule } from "src/app/components/pca-header/pca-header.module";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: DeliveryListPage
   }
 ];
@@ -19,7 +22,9 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    HeaderTrasformDirectiveModule,
+    PcaHeaderComponentModule
   ],
   declarations: [DeliveryListPage]
 })

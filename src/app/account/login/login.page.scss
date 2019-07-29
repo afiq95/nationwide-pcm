@@ -1,0 +1,45 @@
+.curve-bg {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.login-form {
+  ion-item:nth-child(2) {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+  ion-item:last-child {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
+  ion-item {
+    --ion-background-color: rgba(255, 255, 255, 0.2);
+    background: rgba(0, 0, 0, 0.1);
+    margin-bottom: 1px;
+  }
+  ion-item {
+    --highlight-color-focused: none;
+  }
+}
+
+// .login-form-buttons {
+//   ion-item {
+//     --border-radius: 10px;
+//     --highlight-color-focused: none;
+//     margin-bottom: 5px;
+//   }
+
+//   ion-item ion-label {
+//     margin: 0px;
+//   }
+// }
+
+.login-button {
+  --box-shadow: none;
+  --border-radius: 7px;
+}
+
+ion-content {
+  --background: white;
+}

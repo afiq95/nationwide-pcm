@@ -1,9 +1,11 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar [myScrollVanish]="scrollArea">
     <ion-title color="light">Delivery</ion-title>
+    <!-- <app-master-header slot="end"></app-master-header> -->
+    <app-pca-header slot="end"></app-pca-header>
   </ion-toolbar>
 </ion-header>
-<ion-content fullscreen>
+<ion-content #scrollArea scrollEvents="true" fullscreen>
   <ion-grid fixed>
     <ion-row class="ion-align-items-center">
       <ion-col size="11">
@@ -11,17 +13,16 @@
           mode="ios"
           color="light"
           placeholder="Type CN Number"
-          (ionChange)="onSearchChange($event)"
           [debounce]="250"
         ></ion-searchbar>
       </ion-col>
-      <ion-col size="1" class="ion-text-left" style="margin-left:-6px ">
-        <ion-icon size="large" color="light" name="qr-scanner"></ion-icon>
+      <ion-col size="1" class="ion-text-left" style="margin-left:-12px ">
+        <ion-icon (click)="openQr()" size="large" color="light" name="qr-scanner"></ion-icon>
       </ion-col>
     </ion-row>
   </ion-grid>
   <ion-list>
-    <ion-item *ngFor="let delivery of deliveries">
+    <ion-item *ngFor="let delivery of deliveries" class="transition-in">
       <ion-checkbox
         (ionChange)="checkChecked($event, delivery)"
         [(ngModel)]="delivery.isChecked"
@@ -68,15 +69,26 @@
           class="ion-text-center roboto-semi-bold"
           style="border-right: 1px rgba(204, 204, 204, 1) solid;"
         >
-          Pending Task
-          <span
-            style="border: 1px rgba(204, 204, 204, 1) solid;border-radius: 50%;padding:5px 6px 5px 6px"
-          >
-            50
-          </span>
+          <ion-label color="primary">
+            Pending Task
+          </ion-label>
+          <ion-label color="primary">
+            <span
+              style="border: 1px rgba(204, 204, 204, 1) solid;border-radius: 50%;padding:5px 6px 5px 6px"
+            >
+              50
+            </span>
+          </ion-label>
         </ion-col>
-        <ion-col size="6" class="ion-text-center roboto-semi-bold">
-          Completed Task
+        <ion-col
+          routerDirection="root"
+          routerLink="/tabs/delivery-list/completed"
+          size="6"
+          class="ion-text-center roboto-semi-bold"
+        >
+          <ion-label>
+            Completed Task
+          </ion-label>
           <span
             style="border: 1px rgba(204, 204, 204, 1) solid;border-radius: 50%;padding:5px 6px 5px 6px"
           >

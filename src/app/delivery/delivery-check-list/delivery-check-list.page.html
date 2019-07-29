@@ -1,0 +1,62 @@
+<ion-header>
+  <ion-toolbar [myScrollVanish]="scrollArea">
+    <ion-buttons slot="start">
+      <ion-back-button mode="ios" icon="ios-arrow-back" text="" color="light"></ion-back-button>
+    </ion-buttons>
+    <ion-title color="light">Delivery</ion-title>
+    <!-- <app-master-header slot="end"></app-master-header> -->
+    <app-pca-header slot="end"></app-pca-header>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content #scrollArea scrollEvents="true" fullscreen>
+  <ion-card color="light" mode="ios">
+    <ion-card-header class="ion-no-padding ion-padding-horizontal ion-padding-top">
+      <ion-card-title>Total Item : {{ deliveries.length }}</ion-card-title>
+      <ion-card-subtitle style="color: rgba(189,180,180,1);font-size : 12px">
+        Type CN Number from pending list
+      </ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content class="ion-no-padding">
+      <ion-grid no-padding>
+        <ion-row class="ion-align-items-center">
+          <ion-col size="9">
+            <ion-searchbar
+              class="ion-no-padding ion-padding-start"
+              [(ngModel)]="searchText"
+              placeholder="CN Number"
+              mode="ios"
+            ></ion-searchbar>
+          </ion-col>
+          <ion-col size="3" class="ion-text-left">
+            <ion-button *ngIf="searchText != ''" (click)="onClick()" color="dark" fill="clear">
+              <ion-icon slot="icon-only" name="add"></ion-icon>
+            </ion-button>
+            <ion-button *ngIf="searchText == ''" (click)="openQr()" color="dark" fill="clear">
+              <ion-icon slot="icon-only" name="qr-scanner"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+    <ion-card-content class="ion-no-padding ion-padding-horizontal ion-padding-bottom">
+      <ion-label>CN Numbers</ion-label>
+      <ion-list>
+        <ion-item *ngFor="let item of deliveries">
+          <ion-label>{{ item.consignmentNote }}</ion-label>
+          <ion-button fill="clear" color="dark">
+            <ion-icon slot="icon-only" name="close"></ion-icon>
+          </ion-button>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+    <ion-card-content class="ion-no-padding ion-padding-bottom">
+      <ion-button
+        (click)="next()"
+        style="margin-left:auto;margin-right:auto;display: block !important;width:30%"
+      >
+        Next
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

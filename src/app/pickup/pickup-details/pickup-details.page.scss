@@ -1,0 +1,29 @@
+.icon {
+  display: inline-block;
+  font-size: 20px;
+  vertical-align: middle;
+}
+
+.icon.grey {
+  color: rgb(116, 116, 116);
+}
+
+.text {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.text.grey {
+  color: rgb(116, 116, 116);
+}
+.camera-box {
+  height: 150px;
+  width: 300px;
+  border: 1px solid black;
+  background-image: url("../../../assets/svgs/photo-camera.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 64px;
+  background-color: rgba(240, 240, 240, 1);
+  border-radius: 25px;
+}

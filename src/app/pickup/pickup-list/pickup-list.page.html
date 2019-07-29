@@ -1,0 +1,182 @@
+<ion-header>
+  <ion-toolbar [myScrollVanish]="scrollArea">
+    <ion-title color="light">Pickup</ion-title>
+    <!-- <app-master-header slot="end"></app-master-header> -->
+    <app-pca-header slot="end"></app-pca-header>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content #scrollArea scrollEvents="true" fullscreen>
+  <ng-container *ngIf="currentStatus == 'Pending'; else elseTemplate">
+    <ion-list class="transition-in">
+      <ion-item lines="full" *ngFor="let pickup of pendings">
+        <ion-grid no-padding>
+          <ion-row class="ion-align-items-center">
+            <ion-col size="7" class="ion-text-left">
+              <ion-label class="font-20">
+                124
+              </ion-label>
+            </ion-col>
+            <ion-col size="5" class="ion-text-right" style="margin-top: -4px">
+              <ion-icon class="icon " name="time" mode="md"></ion-icon>
+              <span class="text" style="color:black">
+                {{ pickup.DateTimeScheduled | date: "hh:mm aa" }}
+              </span>
+            </ion-col>
+            <ion-col size="6">
+              <ion-icon class="icon grey" name="business" mode="ios"></ion-icon>
+              <span class="text grey roboto-light">RHB Bank</span>
+            </ion-col>
+            <ion-col size="6">
+              <ion-icon class="icon grey" name="at" mode="ios"></ion-icon>
+              <span class="text grey roboto-light">1525</span>
+            </ion-col>
+            <ion-col size="6">
+              <ion-icon class="icon grey" name="contact" mode="ios"></ion-icon>
+              <span class="text grey roboto-light">{{ pickup.Staff.Name }}</span>
+            </ion-col>
+            <ion-col size="6">
+              <ion-icon class="icon grey" name="call" mode="ios"></ion-icon>
+              <span class="text grey roboto-light">{{ pickup.Staff.TelephoneNumber }}</span>
+            </ion-col>
+            <ion-col size="1">
+              <ion-icon class="icon grey" name="pin" mode="md"></ion-icon>
+            </ion-col>
+            <ion-col class="ion-no-padding" size="11">
+              <span class="text grey roboto-light">{{ pickup.Address }} </span>
+            </ion-col>
+            <ion-col size="" class="ion-text-center"> </ion-col>
+            <ion-col size="12" class="ion-text-right" *ngIf="pickup.IsAccepted">
+              <ion-button
+                mode="ios"
+                shape="round"
+                routerDirection="forward"
+                routerLink="/pickup-details"
+                color="primary"
+                class="button-condensed"
+                (click)="pickupPage(pickup)"
+              >
+                Pick Up
+              </ion-button>
+            </ion-col>
+            <ion-col size="12" class="ion-text-right" *ngIf="!pickup.IsAccepted">
+              <ion-button
+                mode="ios"
+                shape="round"
+                (click)="accept(pickup)"
+                color="success"
+                class="button-condensed"
+              >
+                Accept
+              </ion-button>
+              <ion-button
+                mode="ios"
+                class="button-condensed"
+                shape="round"
+                (click)="openDeclineForm(pickup)"
+                color="warning"
+              >
+                Decline
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+      <ion-item lines="none" class="ion-text-center" *ngIf="pendings.length == 0">
+        <h5>No Pending Pickup</h5>
+      </ion-item>
+    </ion-list>
+  </ng-container>
+  <ng-template #elseTemplate>
+    <ion-list class="transition-in">
+      <ion-item lines="full" *ngFor="let pickup of completed">
+        <ion-grid no-padding>
+          <ion-row class="ion-align-items-center">
+            <ion-col size="7" class="ion-text-left">
+              <ion-label class="font-20">
+                124
+              </ion-label>
+            </ion-col>
+            <ion-col size="5" class="ion-text-right" style="margin-top: -4px">
+              <ion-icon class="icon " name="time" mode="md"></ion-icon>
+              <span class="text" style="color:black">
+                {{ pickup.DateTimeScheduled | date: "hh:mm aa" }}
+              </span>
+            </ion-col>
+            <ion-col size="6">
+              <ion-icon class="icon grey" name="business" mode="ios"></ion-icon>
+              <span class="text grey roboto-light">RHB Bank</span>
+            </ion-col>
+            <ion-col size="6">
+              <ion-icon class="icon grey" name="at" mode="ios"></ion-icon>
+              <span class="text grey roboto-light">1525</span>
+            </ion-col>
+            <ion-col size="6">
+              <ion-icon class="icon grey" name="contact" mode="ios"></ion-icon>
+              <span class="text grey roboto-light">{{ pickup.Staff.Name }}</span>
+            </ion-col>
+            <ion-col size="6">
+              <ion-icon class="icon grey" name="call" mode="ios"></ion-icon>
+              <span class="text grey roboto-light">{{ pickup.Staff.TelephoneNumber }}</span>
+            </ion-col>
+            <ion-col size="1">
+              <ion-icon class="icon grey" name="pin" mode="md"></ion-icon>
+            </ion-col>
+            <ion-col class="ion-no-padding" size="11">
+              <span class="text grey roboto-light">{{ pickup.Address }} </span>
+            </ion-col>
+            <ion-col size="" class="ion-text-center"> </ion-col>
+
+            <ion-col size="12" class="ion-text-right">
+              <ion-button mode="ios" shape="round" color="success" class="button-condensed">
+                Successful
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-list>
+  </ng-template>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar color="light">
+    <ion-grid no-padding>
+      <ion-row>
+        <ion-col
+          (click)="currentStatus = 'Pending'"
+          size="6"
+          class="ion-text-center roboto-semi-bold"
+          style="border-right: 1px rgba(204, 204, 204, 1) solid;"
+        >
+          <ion-label [color]="currentStatus == 'Pending' ? 'primary' : ''">
+            Pending Task
+          </ion-label>
+          <ion-label [color]="currentStatus == 'Pending' ? 'primary' : ''">
+            <span
+              style="border: 1px rgba(204, 204, 204, 1) solid;border-radius: 50%;padding:5px 6px 5px 6px"
+            >
+              {{ pendings.length }}
+            </span>
+          </ion-label>
+        </ion-col>
+        <ion-col
+          (click)="currentStatus = 'Completed'"
+          size="6"
+          class="ion-text-center roboto-semi-bold"
+        >
+          <ion-label [color]="currentStatus == 'Completed' ? 'primary' : ''">
+            Completed Task
+          </ion-label>
+          <ion-label [color]="currentStatus == 'Completed' ? 'primary' : ''">
+            <span
+              style="border: 1px rgba(204, 204, 204, 1) solid;border-radius: 50%;padding:5px 6px 5px 6px"
+            >
+              {{ completed.length }}
+            </span>
+          </ion-label>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-footer>
