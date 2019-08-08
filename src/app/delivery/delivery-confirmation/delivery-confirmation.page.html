@@ -17,15 +17,43 @@
     <ion-card-content class="ion-no-padding">
       <ion-list>
         <ion-item>
+          <ion-label position="stacked">Receiver Name</ion-label>
+          <ion-input
+            type="text"
+            [(ngModel)]="receiverName"
+            placeholder="Insert Receiver Name"
+          ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Receiver Identification</ion-label>
+          <ion-input
+            type="text"
+            [(ngModel)]="receiverId"
+            placeholder="Insert Receiver Identification Number"
+          ></ion-input>
+        </ion-item>
+        <ion-item>
           <ion-label position="stacked">Delivery Code</ion-label>
-          <ion-select multiple="false" placeholder="Select Delivery Code">
+          <ion-select multiple="false" [(ngModel)]="status" placeholder="Select Delivery Code">
             <ion-select-option value="success">Successful</ion-select-option>
             <ion-select-option value="failed">Failed</ion-select-option>
           </ion-select>
         </ion-item>
+        <ion-item *ngIf="status == 'failed'">
+          <ion-label position="stacked">Fail Code</ion-label>
+          <ion-select multiple="false" [(ngModel)]="failCode" placeholder="Select Fail Code">
+            <ion-select-option *ngFor="let fail of allFailCode" [value]="fail.code">
+              {{ fail.code }} - {{ fail.name }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
         <ion-item>
           <ion-label position="stacked">Notes</ion-label>
-          <ion-textarea type="text" placeholder="Insert notes regarding delivery"></ion-textarea>
+          <ion-textarea
+            type="text"
+            [(ngModel)]="note"
+            placeholder="Insert notes regarding delivery"
+          ></ion-textarea>
         </ion-item>
         <ion-item lines="none">
           <ion-label>Attachment</ion-label>
@@ -43,8 +71,21 @@
         expand="block"
         mode="ios"
         style="margin-left:auto;margin-right:auto;display: block !important;max-width:70%;max-height:30px"
+        *ngIf="status != 'failed'"
       >
         Signature
+      </ion-button>
+      <ion-button
+        class="ion-margin-bottom"
+        fill="solid"
+        shape="round"
+        (click)="done()"
+        expand="block"
+        mode="ios"
+        style="margin-left:auto;margin-right:auto;display: block !important;max-width:70%;max-height:30px"
+        *ngIf="status == 'failed'"
+      >
+        Done
       </ion-button>
     </ion-card-content>
   </ion-card>

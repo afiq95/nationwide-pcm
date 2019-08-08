@@ -19,10 +19,11 @@ export class PcaHeaderComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    console.log("entered");
     this.isOnDuty = await this.storage.getDuty();
     this.event.subscribe("dutyChanged", item => {
-      this.isOnDuty = item;
+      this.storage.setDuty(item).then(() => {
+        this.isOnDuty = item;
+      });
     });
   }
 

@@ -16,6 +16,7 @@
 .text.grey {
   color: rgb(116, 116, 116);
 }
+
 .camera-box {
   height: 150px;
   width: 300px;
@@ -25,5 +26,15 @@
   background-position: center;
   background-size: 64px;
   background-color: rgba(240, 240, 240, 1);
+  border-radius: 25px;
+}
+
+.image-box {
+  height: 150px;
+  width: 300px;
+  border: 1px solid black;
+  background-repeat: no-repeat;
+  background-position: center;
+  object-fit: cover;
   border-radius: 25px;
 }

@@ -29,7 +29,7 @@
             ></ion-searchbar>
           </ion-col>
           <ion-col size="3" class="ion-text-left">
-            <ion-button *ngIf="searchText != ''" (click)="onClick()" color="dark" fill="clear">
+            <ion-button *ngIf="searchText != ''" (click)="add()" color="dark" fill="clear">
               <ion-icon slot="icon-only" name="add"></ion-icon>
             </ion-button>
             <ion-button *ngIf="searchText == ''" (click)="openQr()" color="dark" fill="clear">
@@ -43,8 +43,8 @@
       <ion-label>CN Numbers</ion-label>
       <ion-list>
         <ion-item *ngFor="let item of deliveries">
-          <ion-label>{{ item.consignmentNote }}</ion-label>
-          <ion-button fill="clear" color="dark">
+          <ion-label>{{ item.CnNo }}</ion-label>
+          <ion-button (click)="removeDelivery(item)" fill="clear" color="dark">
             <ion-icon slot="icon-only" name="close"></ion-icon>
           </ion-button>
         </ion-item>

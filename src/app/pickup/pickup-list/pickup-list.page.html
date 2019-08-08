@@ -14,7 +14,7 @@
           <ion-row class="ion-align-items-center">
             <ion-col size="7" class="ion-text-left">
               <ion-label class="font-20">
-                124
+                {{ pickup.PickupId }}
               </ion-label>
             </ion-col>
             <ion-col size="5" class="ion-text-right" style="margin-top: -4px">
@@ -23,27 +23,36 @@
                 {{ pickup.DateTimeScheduled | date: "hh:mm aa" }}
               </span>
             </ion-col>
-            <ion-col size="6">
-              <ion-icon class="icon grey" name="business" mode="ios"></ion-icon>
-              <span class="text grey roboto-light">RHB Bank</span>
-            </ion-col>
-            <ion-col size="6">
+            <ion-col size="12">
               <ion-icon class="icon grey" name="at" mode="ios"></ion-icon>
-              <span class="text grey roboto-light">1525</span>
+              <span class="text grey roboto-light">{{ pickup.CustomerNumber }}</span>
             </ion-col>
-            <ion-col size="6">
+            <ion-col size="1">
+              <ion-icon class="icon grey" name="business" mode="ios"></ion-icon>
+            </ion-col>
+            <ion-col size="11">
+              <span class="text grey roboto-light">{{ pickup.CustomerName }}</span>
+            </ion-col>
+            <ion-col size="1">
               <ion-icon class="icon grey" name="contact" mode="ios"></ion-icon>
-              <span class="text grey roboto-light">{{ pickup.Staff.Name }}</span>
             </ion-col>
-            <ion-col size="6">
+            <ion-col size="11">
+              <span class="text grey roboto-light">{{ pickup.ContactName }}</span>
+            </ion-col>
+            <ion-col size="12" (click)="callContact(pickup.TelephoneNumber)">
               <ion-icon class="icon grey" name="call" mode="ios"></ion-icon>
-              <span class="text grey roboto-light">{{ pickup.Staff.TelephoneNumber }}</span>
+              <span style="color:#0000EE;text-decoration:underline " class="text grey roboto-light">
+                {{ pickup.TelephoneNumber }}
+              </span>
             </ion-col>
             <ion-col size="1">
               <ion-icon class="icon grey" name="pin" mode="md"></ion-icon>
             </ion-col>
             <ion-col class="ion-no-padding" size="11">
               <span class="text grey roboto-light">{{ pickup.Address }} </span>
+            </ion-col>
+            <ion-col size="12">
+              ETA : {{ pickup.distance }} KM | {{ pickup.time }} Minutes
             </ion-col>
             <ion-col size="" class="ion-text-center"> </ion-col>
             <ion-col size="12" class="ion-text-right" *ngIf="pickup.IsAccepted">
@@ -94,7 +103,7 @@
           <ion-row class="ion-align-items-center">
             <ion-col size="7" class="ion-text-left">
               <ion-label class="font-20">
-                124
+                {{ pickup.PickupId }}
               </ion-label>
             </ion-col>
             <ion-col size="5" class="ion-text-right" style="margin-top: -4px">
@@ -103,21 +112,25 @@
                 {{ pickup.DateTimeScheduled | date: "hh:mm aa" }}
               </span>
             </ion-col>
-            <ion-col size="6">
-              <ion-icon class="icon grey" name="business" mode="ios"></ion-icon>
-              <span class="text grey roboto-light">RHB Bank</span>
-            </ion-col>
-            <ion-col size="6">
+            <ion-col size="12">
               <ion-icon class="icon grey" name="at" mode="ios"></ion-icon>
-              <span class="text grey roboto-light">1525</span>
+              <span class="text grey roboto-light">{{ pickup.CustomerNumber }}</span>
+            </ion-col>
+            <ion-col size="12">
+              <ion-icon class="icon grey" name="business" mode="ios"></ion-icon>
+              <span class="text grey roboto-light">{{ pickup.CustomerName }}</span>
             </ion-col>
             <ion-col size="6">
               <ion-icon class="icon grey" name="contact" mode="ios"></ion-icon>
-              <span class="text grey roboto-light">{{ pickup.Staff.Name }}</span>
+              <span class="text grey roboto-light">{{ pickup.ContactName }}</span>
             </ion-col>
-            <ion-col size="6">
+            <ion-col size="6" (click)="callContact(pickup.TelephoneNumber)">
               <ion-icon class="icon grey" name="call" mode="ios"></ion-icon>
-              <span class="text grey roboto-light">{{ pickup.Staff.TelephoneNumber }}</span>
+              <span
+                style="color:#0000EE;text-decoration:underline "
+                class="text grey roboto-light"
+                >{{ pickup.TelephoneNumber }}</span
+              >
             </ion-col>
             <ion-col size="1">
               <ion-icon class="icon grey" name="pin" mode="md"></ion-icon>
@@ -125,15 +138,36 @@
             <ion-col class="ion-no-padding" size="11">
               <span class="text grey roboto-light">{{ pickup.Address }} </span>
             </ion-col>
-            <ion-col size="" class="ion-text-center"> </ion-col>
-
+            <ion-col size="12"> </ion-col>
             <ion-col size="12" class="ion-text-right">
-              <ion-button mode="ios" shape="round" color="success" class="button-condensed">
+              <ion-button
+                mode="ios"
+                shape="round"
+                color="success"
+                class="button-condensed"
+                *ngIf="pickup.IsCompleted && pickup.IsPickedUp"
+                disabled
+              >
                 Successful
+              </ion-button>
+            </ion-col>
+            <ion-col size="12" class="ion-text-right">
+              <ion-button
+                mode="ios"
+                shape="round"
+                color="danger"
+                class="button-condensed"
+                *ngIf="pickup.IsCompleted && !pickup.IsPickedUp"
+                disabled
+              >
+                Failed
               </ion-button>
             </ion-col>
           </ion-row>
         </ion-grid>
+      </ion-item>
+      <ion-item lines="none" class="ion-text-center" *ngIf="completed.length == 0">
+        <h5>No Pending Pickup</h5>
       </ion-item>
     </ion-list>
   </ng-template>

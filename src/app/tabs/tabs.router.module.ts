@@ -13,6 +13,10 @@ const routes: Routes = [
           {
             path: "",
             loadChildren: "../dashboard/dashboard.module#DashboardPageModule"
+          },
+          {
+            path: "route",
+            loadChildren: "../routeCode/view-all/view-all.module#ViewAllPageModule"
           }
         ]
       },

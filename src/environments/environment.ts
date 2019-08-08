@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiUrl: "http://arex.bespoke.com.my:9121",
+  hereAppCode: "j-ZlkVQ5yma1QjFtJv3FWg",
+  hereAppId: "LE46vzqRZvu1tvwf45u1"
 };
 
 /*

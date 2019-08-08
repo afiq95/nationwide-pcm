@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 
-import { Platform } from "@ionic/angular";
+import { Platform, Events } from "@ionic/angular";
 import { SplashScreen } from "@ionic-native/splash-screen/ngx";
 import { StatusBar } from "@ionic-native/status-bar/ngx";
 import { AndroidPermissions } from "@ionic-native/android-permissions/ngx";
@@ -21,27 +21,65 @@ export class AppComponent {
     private backgroundMode: BackgroundMode,
     private fcm: FcmService,
     private storage: LocalStorageService,
-    private api: PCAApiService
+    private api: PCAApiService,
+    private event: Events
   ) {
     this.initializeApp();
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
-      this.androidPermissions
-        .checkPermission(this.androidPermissions.PERMISSION.CAMERA)
-        .then(
-          result => console.log("Has permission?", result.hasPermission),
-          err =>
-            this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.CAMERA)
-        );
+      // this.androidPermissions
+      //   .checkPermission(this.androidPermissions.PERMISSION.CAMERA)
+      //   .then(
+      //     result => console.log("Has permission?", result.hasPermission),
+      //     err =>
+      //       this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.CAMERA)
+      //   );
+      // this.androidPermissions
+      //   .checkPermission(this.androidPermissions.PERMISSION.ACCESS_FINE_LOCATION)
+      //   .then(
+      //     result =>
+      //       this.androidPermissions.requestPermission(
+      //         this.androidPermissions.PERMISSION.ACCESS_FINE_LOCATION
+      //       ),
+      //     err =>
+      //       this.androidPermissions.requestPermission(
+      //         this.androidPermissions.PERMISSION.ACCESS_FINE_LOCATION
+      //       )
+      //   );
+      this.androidPermissions.requestPermissions([
+        this.androidPermissions.PERMISSION.CAMERA,
+        this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION,
+        this.androidPermissions.PERMISSION.ACCESS_FINE_LOCATION
+      ]);
 
-      this.androidPermissions.requestPermissions([this.androidPermissions.PERMISSION.CAMERA]);
+      // this.androidPermissions
+      //   .checkPermission(this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION)
+      //   .then(result => {
+      //     if (result.hasPermission) {
+      //     } else {
+      //       console.log("no perm");
+      //       this.androidPermissions.requestPermissions([
+      //         this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION
+      //       ]);
+      //     }
+      //   });
       // this.storage.getApiToken().then(res => {
       //   if (res) this.fcm.initToken().then(res => {
       //     this.storage.getUserId().then(uid =>)
       //   });
       // });
+      this.api.getDuty().then((res: any) => {
+        if (res.data.Results.length > 0) {
+          console.log("here");
+          this.storage.setDutyId(res.data.Results[0].Id);
+          this.event.publish("dutyChanged", true);
+        } else {
+          this.storage.setDutyId("");
+          this.event.publish("dutyChanged", false);
+        }
+      });
 
       this.statusBar.hide();
       this.statusBar.styleLightContent();

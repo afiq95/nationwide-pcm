@@ -30,7 +30,13 @@ export class FcmService {
   }
 
   async initToken() {
-    return await this.fcm.getToken();
+    const token = await this.fcm.getToken();
+    if ((await this.storage.getFcmToken()) == token) return token;
+    else {
+      await this.api.updateFcmToken(token, await this.storage.getUserId());
+      await this.storage.setFcmToken(token);
+      return token;
+    }
   }
 
   async NewPickupTask(item) {

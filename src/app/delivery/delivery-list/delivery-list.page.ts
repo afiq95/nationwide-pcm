@@ -2,39 +2,87 @@ import { Component, OnInit } from "@angular/core";
 import { DeliveryService } from "src/app/services/delivery.service";
 import { NavController } from "@ionic/angular";
 import { BarcodeScanner, BarcodeScanResult } from "@ionic-native/barcode-scanner/ngx";
+import { LocalStorageService } from "src/app/services/local-storage.service";
+import { LoadingService } from "src/app/services/loading.service";
+import { PCAApiService } from "src/app/services/pcaapi.service";
 
 @Component({
   selector: "app-delivery-list",
   templateUrl: "./delivery-list.page.html",
   styleUrls: ["./delivery-list.page.scss"]
 })
-export class DeliveryListPage implements OnInit {
+export class DeliveryListPage {
   checked: any[] = [];
   deliveries: any[] = [];
+  deliDRSes: any[] = [];
+  completedDeliveries: any[] = [];
+  status = "pending";
   constructor(
-    private deliService: DeliveryService,
+    private api: PCAApiService,
     private navCtrl: NavController,
-    private barCodeScanner: BarcodeScanner
+    private barCodeScanner: BarcodeScanner,
+    private storage: LocalStorageService,
+    private loading: LoadingService
   ) {}
 
-  ngOnInit() {
-    this.deliveries = this.deliService.getDeliveries();
+  async ionViewWillLeave() {
+    this.checked = [];
+    this.completedDeliveries = [];
+    this.deliveries = [];
+    this.deliDRSes = [];
+  }
+  async ionViewWillEnter() {
+    await this.loading.PresentLoading();
+    // this.deliveries
+    //   .filter(x => x.isChecked)
+    //   .forEach(y => {
+    //     y.isChecked = false;
+    //   });
+
+    const deliveryRoute = await this.storage.getDeliveryRouting();
+    for (const item of deliveryRoute) {
+      const data = (await this.api.getDeliveries(item.RouteCode)).data.Results;
+      this.deliDRSes.push(...data);
+    }
+
+    for (const deli of this.deliDRSes) {
+      const data = await this.api.getDeliveryTasks(deli.DrsNo);
+      const successful = data.data.Results.filter(f => {
+        return f.IsDelivered;
+      });
+      const pendings = data.data.Results.filter(f => {
+        return !f.IsDelivered;
+      });
+      this.deliveries.push(...pendings);
+      this.completedDeliveries.push(...successful);
+    }
+    await this.loading.Dismiss();
   }
 
   checkChecked($event, delivery) {
     if ($event.detail.checked) this.checked.push(delivery);
     else {
       const index = this.checked.findIndex(x => {
-        return x.id == delivery.id;
+        return x.Id == delivery.Id;
       });
       this.checked.splice(index, 1);
     }
   }
 
+  clearAll() {
+    this.checked = [];
+    this.deliveries
+      .filter(x => x.isChecked)
+      .forEach(y => {
+        y.isChecked = false;
+      });
+  }
+
   proceed() {
     this.navCtrl.navigateForward("/delivery-check-list", {
       state: {
-        items: this.checked
+        items: this.checked,
+        existed: this.deliveries
       }
     });
   }
@@ -45,17 +93,23 @@ export class DeliveryListPage implements OnInit {
       .then((barcodeData: BarcodeScanResult) => {
         if (!barcodeData.cancelled) {
           const found = this.deliveries.find(x => {
-            return x.consignmentNote.toLowerCase() == barcodeData.text.toLowerCase();
+            return x.CnNo.toLowerCase() == barcodeData.text.substring(0, 8).toLowerCase();
           });
           this.navCtrl.navigateForward("/delivery-check-list", {
             state: {
-              items: [found]
-            }
+              items: [found],
+              existed: this.deliveries
+            },
+            replaceUrl: true
           });
         }
       })
       .catch(err => {
         console.log("Error", err);
       });
+  }
+
+  change(item) {
+    this.status = item;
   }
 }

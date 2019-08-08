@@ -3,7 +3,7 @@
     <name>Nationwide</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="hi@ionicframework.com" href="http://ionicframework.com/">Ionic Framework Team</author>
-    <content original-src="index.html" src="http://192.168.0.37:8100" />
+    <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -104,6 +104,7 @@
     </plugin>
     <plugin name="cordova-plugin-background-mode" spec="0.7.2" />
     <plugin name="cordova-plugin-fcm-with-dependecy-updated" spec="2.4.0" />
-    <allow-navigation href="http://192.168.0.37:8100" sessionid="edf07017" />
+    <plugin name="mx.ferreyra.callnumber" spec="~0.0.2" />
+    <allow-navigation href="http://192.168.0.47:8100" sessionid="5ae81d18" />
     <engine name="android" spec="7.1.4" />
 </widget>

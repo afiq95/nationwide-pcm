@@ -13,6 +13,7 @@ import { HeaderTrasformDirective } from "./directive/header-trasform.directive";
 import { DeliveryService } from "./services/delivery.service";
 import { DeclinePickupFormPageModule } from "./pickup/decline-pickup-form/decline-pickup-form.module";
 import { BarcodeScanner } from "@ionic-native/barcode-scanner/ngx";
+import { CallNumber } from "@ionic-native/call-number/ngx";
 import { AndroidPermissions } from "@ionic-native/android-permissions/ngx";
 import { QrCodeService } from "./services/qr-code.service";
 import { Camera } from "@ionic-native/camera/ngx";
@@ -20,8 +21,12 @@ import { BackgroundMode } from "@ionic-native/background-mode/ngx";
 import { FCM } from "@ionic-native/fcm/ngx";
 import { FcmService } from "./services/fcm.service";
 import { PCAApiService } from "./services/pcaapi.service";
+import { Base64 } from "@ionic-native/base64/ngx";
 import { IonicStorageModule } from "@ionic/storage";
 import { AuthGuardService } from "./serivices/auth-guard.service";
+import { HereAPIService } from "./services/here-api.service";
+import { HTTP } from "@ionic-native/http/ngx";
+import { Geolocation } from "@ionic-native/geolocation/ngx";
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -48,7 +53,12 @@ import { AuthGuardService } from "./serivices/auth-guard.service";
     FCM,
     FcmService,
     PCAApiService,
-    AuthGuardService
+    AuthGuardService,
+    CallNumber,
+    Base64,
+    HereAPIService,
+    HTTP,
+    Geolocation
   ],
   bootstrap: [AppComponent]
 })
