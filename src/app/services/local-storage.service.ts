@@ -43,6 +43,14 @@ export class LocalStorageService {
     return await this.storage.get(ONDUTY);
   }
 
+  async setVehicleMode(item) {
+    return await this.storage.set(VEHICLEMODE, item);
+  }
+
+  async getVehicleMode() {
+    return await this.storage.get(VEHICLEMODE);
+  }
+
   async setDuty(item) {
     return await this.storage.set(ONDUTY, item);
   }
@@ -120,3 +128,4 @@ const ONDUTYID: string = "ONDUTYID";
 const PICKUPROUTE: string = "PICKUPROUTE";
 const DELIVERYROUTE: string = "DELIVERYROUTE";
 const COURIERID: string = "COURIERID";
+const VEHICLEMODE: string = "VEHICLEMODE";
