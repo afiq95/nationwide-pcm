@@ -2,7 +2,6 @@
   <ion-toolbar [myScrollVanish]="scrollArea">
     <ion-title color="light">Delivery</ion-title>
     <!-- <app-master-header slot="end"></app-master-header> -->
-    <app-pca-header slot="end"></app-pca-header>
   </ion-toolbar>
 </ion-header>
 <ion-content #scrollArea scrollEvents="true" fullscreen>
@@ -13,6 +12,7 @@
           <ion-searchbar
             mode="ios"
             color="light"
+            (ionChange)="searchCn($event)"
             placeholder="Type CN Number"
             [debounce]="250"
           ></ion-searchbar>
@@ -31,6 +31,7 @@
           color="secondary"
         ></ion-checkbox>
         <ion-label>
+          <p><span class="font-15 roboto-semi-bold">Drs No : </span>{{ delivery.DrsNo }}</p>
           <p><span class="font-15 roboto-semi-bold">CN No : </span>{{ delivery.CnNo }}</p>
           <p><span class="font-15 roboto-semi-bold">Cust Id : </span>{{ delivery.CustomerNo }}</p>
           <p><span class="font-15 roboto-semi-bold">Pcs : </span>{{ delivery.Pieces }}</p>

@@ -80,7 +80,9 @@ export class PCAApiService {
       IsPickedUp: item.IsPickedUp,
       IsCompleted: item.IsCompleted,
       DeclinedReason: item.reason,
-      PickupCode: item.pickupCode
+      PickupCode: item.pickupCode,
+      Mode: await this.storage.getVehicleMode(),
+      CourierId: await this.storage.getCourierId()
     });
   }
 
@@ -102,10 +104,14 @@ export class PCAApiService {
     return await this.axios.get("/api/duty/" + staffId);
   }
 
-  async GetPickupCount(item) {
+  async GetPickupCount(routeCode) {
     await this.initAxios();
-    const staffId = await this.storage.getStaffId();
-    return await this.axios.get(`/api/pickup/count/${staffId}/${item}`);
+    return await this.axios.get(`/api/pickup/count/${routeCode}`);
+  }
+
+  async GetDeliCount(routeCode) {
+    await this.initAxios();
+    return await this.axios.get(`/api/delivery/count/${routeCode}`);
   }
 
   async InsertRoutingCode(item) {

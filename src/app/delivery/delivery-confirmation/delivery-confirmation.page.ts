@@ -4,6 +4,7 @@ import { Camera } from "@ionic-native/camera/ngx";
 import { PCAApiService } from "src/app/services/pcaapi.service";
 import { NavController } from "@ionic/angular";
 import { Base64 } from "@ionic-native/base64/ngx";
+import { LocalStorageService } from "src/app/services/local-storage.service";
 
 @Component({
   selector: "app-delivery-confirmation",
@@ -50,7 +51,8 @@ export class DeliveryConfirmationPage implements OnInit {
     private router: Router,
     private camera: Camera,
     private api: PCAApiService,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private storage: LocalStorageService
   ) {}
 
   ngOnInit() {
@@ -76,10 +78,14 @@ export class DeliveryConfirmationPage implements OnInit {
   }
 
   async done() {
+    const mode = await this.storage.getVehicleMode();
+    const courierId = await this.storage.getCourierId();
     const data = this.deliveries.map(x => {
       x.IsSuccessful = false;
       x.FailCode = this.failCode;
       x.Reason = this.note;
+      x.Mode = mode;
+      x.CourierId = courierId;
       return { ...x };
     });
     await this.api.failDeliveryTask(data);

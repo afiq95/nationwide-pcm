@@ -108,6 +108,19 @@ export class PickupDetailsPage implements OnInit {
         ]
       });
       await alert.present();
+    } else if (this.cameraUrl == "") {
+      const alert = await this.alertController.create({
+        animated: true,
+        message: "Please attach an image",
+        header: "Warning",
+        buttons: [
+          {
+            role: "cancel",
+            text: "Okay"
+          }
+        ]
+      });
+      await alert.present();
     } else if (
       this.parcelCn == 0 &&
       this.parcelPkg == 0 &&

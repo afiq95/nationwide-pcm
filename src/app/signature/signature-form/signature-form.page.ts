@@ -6,6 +6,7 @@ import { LoadingService } from "src/app/services/loading.service";
 import { NavController } from "@ionic/angular";
 import { Camera } from "@ionic-native/camera/ngx";
 import { Base64 } from "@ionic-native/base64/ngx";
+import { LocalStorageService } from "src/app/services/local-storage.service";
 @Component({
   selector: "app-signature-form",
   templateUrl: "./signature-form.page.html",
@@ -29,7 +30,8 @@ export class SignatureFormPage implements OnInit {
     private loading: LoadingService,
     private navCtrl: NavController,
     private camera: Camera,
-    private base64: Base64
+    private base64: Base64,
+    private storage: LocalStorageService
   ) {}
 
   ngOnInit() {
@@ -45,12 +47,15 @@ export class SignatureFormPage implements OnInit {
     await this.loading.PresentLoading();
     const file = await this.UploadFile();
     const attach = await this.uploadAttachment();
+    const mode = await this.storage.getVehicleMode();
+    const courierId = await this.storage.getCourierId();
     const data = this.deliveries.map(x => {
       x.AttachmentUrl = attach.data.PhotoUrl;
       x.SignatureUrl = file.data.PhotoUrl;
+      x.Mode = mode;
+      x.CourierId = courierId;
       return { ...x };
     });
-    console.log(data);
     await this.api.successDeliveryTask(data);
     this.loading.Dismiss().then(() => {
       this.camera.cleanup();
