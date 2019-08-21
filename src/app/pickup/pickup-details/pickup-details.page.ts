@@ -103,7 +103,7 @@ export class PickupDetailsPage implements OnInit {
         buttons: [
           {
             role: "cancel",
-            text: "Okay"
+            text: "OK"
           }
         ]
       });
@@ -116,7 +116,7 @@ export class PickupDetailsPage implements OnInit {
         buttons: [
           {
             role: "cancel",
-            text: "Okay"
+            text: "OK"
           }
         ]
       });
@@ -135,7 +135,7 @@ export class PickupDetailsPage implements OnInit {
         buttons: [
           {
             role: "cancel",
-            text: "Okay"
+            text: "OK"
           }
         ]
       });
@@ -151,7 +151,20 @@ export class PickupDetailsPage implements OnInit {
         buttons: [
           {
             role: "cancel",
-            text: "Okay"
+            text: "OK"
+          }
+        ]
+      });
+      await alert.present();
+    } else if (this.status == "failed" && this.failCode == "") {
+      const alert = await this.alertController.create({
+        animated: true,
+        message: "Please choose fail code",
+        header: "Attention",
+        buttons: [
+          {
+            role: "cancel",
+            text: "OK"
           }
         ]
       });

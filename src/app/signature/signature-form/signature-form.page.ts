@@ -182,4 +182,8 @@ export class SignatureFormPage implements OnInit {
 
     return new Blob(byteArrays, { type: mime });
   }
+
+  clear() {
+    this.signaturePad.clear();
+  }
 }

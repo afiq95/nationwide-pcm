@@ -71,14 +71,29 @@ export class DeliveryConfirmationPage implements OnInit {
         buttons: [
           {
             role: "cancel",
-            text: "Okay"
+            text: "OK"
+          }
+        ]
+      });
+      await alert.present();
+    } else if (this.receiverId == "" || this.receiverName == "") {
+      const alert = await this.alertController.create({
+        animated: true,
+        message: "Please Fill Receiver Name and Identification",
+        header: "Warning",
+        buttons: [
+          {
+            role: "cancel",
+            text: "OK"
           }
         ]
       });
       await alert.present();
     } else {
+      var recId = this.receiverId;
+      if (this.receiverId.length >= 14) recId = this.receiverId.substring(0, 13);
       const data = this.deliveries.map(x => {
-        x.ReceiverIdentification = this.receiverId;
+        x.ReceiverIdentification = recId;
         x.ReceiverName = this.receiverName;
         return { ...x };
       });
@@ -94,18 +109,29 @@ export class DeliveryConfirmationPage implements OnInit {
   }
 
   async done() {
-    const mode = await this.storage.getVehicleMode();
-    const courierId = await this.storage.getCourierId();
-    const data = this.deliveries.map(x => {
-      x.IsSuccessful = false;
-      x.FailCode = this.failCode;
-      x.Reason = this.note;
-      x.Mode = mode;
-      x.CourierId = courierId;
-      return { ...x };
-    });
-    await this.api.failDeliveryTask(data);
-    await this.navCtrl.navigateRoot("/tabs/dashboard");
+    if (this.failCode != "") {
+      const mode = await this.storage.getVehicleMode();
+      const courierId = await this.storage.getCourierId();
+      const data = this.deliveries.map(x => {
+        x.IsSuccessful = false;
+        x.FailCode = this.failCode;
+        x.Reason = this.note;
+        x.Mode = mode;
+        x.CourierId = courierId;
+        return { ...x };
+      });
+      await this.api.failDeliveryTask(data);
+      await this.navCtrl.navigateRoot("/tabs/dashboard");
+    } else {
+      const alert = await this.alertController.create({
+        animated: true,
+        backdropDismiss: true,
+        buttons: ["OK"],
+        header: "No Fail Code",
+        message: "Choose a fail code"
+      });
+      await alert.present();
+    }
   }
 
   openCamera() {

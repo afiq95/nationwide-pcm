@@ -19,17 +19,15 @@ export class PCAApiService {
       headers: {
         "content-type": "application/json",
         Authorization: "Bearer " + this.token
-      }
+      },
+      timeout: 15000
     });
     this.axios.interceptors.response.use(
       item => {
         return item;
       },
       err => {
-        if (err.response.status == 401)
-          this.navCtrl.navigateRoot("/login", {
-            replaceUrl: true
-          });
+        console.log(err);
       }
     );
   }

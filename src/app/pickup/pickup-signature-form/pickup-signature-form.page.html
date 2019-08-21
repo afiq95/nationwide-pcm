@@ -19,7 +19,7 @@
       <ion-card-title>Please Confirm Your Item</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <ion-list>
+      <ion-list *ngIf="pickup.pickupStatus == 'success'">
         <ion-item>
           <ion-grid no-padding>
             <ion-row>
@@ -48,6 +48,12 @@
           </ion-grid>
         </ion-item>
       </ion-list>
+      <ion-list>
+        <ion-item>
+          <ion-label position="stacked">Fail Code</ion-label>
+          <ion-input [(ngModel)]="pickup.pickupCode" readonly type="text"></ion-input>
+        </ion-item>
+      </ion-list>
     </ion-card-content>
     <ion-card-header>
       <ion-card-title>If correct, Sign Below</ion-card-title>
@@ -68,7 +74,7 @@
               shape="round"
               color="danger"
             >
-              Cancel
+              Clear
             </ion-button>
           </ion-col>
           <ion-col size="6" class="ion-text-center">

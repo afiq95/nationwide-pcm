@@ -1,11 +1,16 @@
 <ion-header>
   <ion-toolbar [myScrollVanish]="scrollArea">
     <ion-buttons slot="start">
-      <ion-back-button mode="ios" icon="ios-arrow-back" text="" color="light"></ion-back-button>
+      <ion-back-button
+        defaultHref="/tabs/dashboard"
+        mode="ios"
+        icon="ios-arrow-back"
+        text=""
+        color="light"
+      ></ion-back-button>
     </ion-buttons>
     <ion-title color="light">Delivery</ion-title>
     <!-- <app-master-header slot="end"></app-master-header> -->
-    
   </ion-toolbar>
 </ion-header>
 
@@ -16,22 +21,6 @@
     </ion-card-header>
     <ion-card-content class="ion-no-padding">
       <ion-list>
-        <ion-item>
-          <ion-label position="stacked">Receiver Name</ion-label>
-          <ion-input
-            type="text"
-            [(ngModel)]="receiverName"
-            placeholder="Insert Receiver Name"
-          ></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="stacked">Receiver Identification</ion-label>
-          <ion-input
-            type="text"
-            [(ngModel)]="receiverId"
-            placeholder="Insert Receiver Identification Number"
-          ></ion-input>
-        </ion-item>
         <ion-item>
           <ion-label position="stacked">Delivery Code</ion-label>
           <ion-select multiple="false" [(ngModel)]="status" placeholder="Select Delivery Code">
@@ -46,6 +35,23 @@
               {{ fail.code }} - {{ fail.name }}
             </ion-select-option>
           </ion-select>
+        </ion-item>
+        <ion-item *ngIf="status == 'success'">
+          <ion-label position="stacked">Receiver Name</ion-label>
+          <ion-input
+            type="text"
+            [(ngModel)]="receiverName"
+            placeholder="Insert Receiver Name"
+          ></ion-input>
+        </ion-item>
+        <ion-item *ngIf="status == 'success'">
+          <ion-label position="stacked">Receiver Identification</ion-label>
+          <ion-input
+            type="text"
+            [(ngModel)]="receiverId"
+            maxlength="14"
+            placeholder="Insert Receiver Identification Number"
+          ></ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="stacked">Notes</ion-label>

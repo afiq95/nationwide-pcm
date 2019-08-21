@@ -1,10 +1,11 @@
 import { Component, OnInit } from "@angular/core";
 import { DeliveryService } from "src/app/services/delivery.service";
-import { NavController } from "@ionic/angular";
+import { NavController, AlertController } from "@ionic/angular";
 import { BarcodeScanner, BarcodeScanResult } from "@ionic-native/barcode-scanner/ngx";
 import { LocalStorageService } from "src/app/services/local-storage.service";
 import { LoadingService } from "src/app/services/loading.service";
 import { PCAApiService } from "src/app/services/pcaapi.service";
+import { delay } from "q";
 
 @Component({
   selector: "app-delivery-list",
@@ -23,7 +24,8 @@ export class DeliveryListPage {
     private navCtrl: NavController,
     private barCodeScanner: BarcodeScanner,
     private storage: LocalStorageService,
-    private loading: LoadingService
+    private loading: LoadingService,
+    public alertController: AlertController
   ) {}
 
   async ionViewWillLeave() {
@@ -34,31 +36,79 @@ export class DeliveryListPage {
     this.deliDRSes = [];
   }
   async ionViewWillEnter() {
+    var retry = false;
+    while (!retry) {
+      try {
+        await this.initData();
+        retry = true;
+      } catch (ex) {
+        const alert = await this.alertController.create({
+          animated: true,
+          backdropDismiss: false,
+          message: "Error getting deliveries",
+          header: "Error",
+          buttons: [
+            {
+              text: "Retry"
+            },
+            {
+              text: "Cancel",
+              handler: () => {
+                this.navCtrl.navigateRoot("/tabs/dashboard", { replaceUrl: true });
+              }
+            }
+          ]
+        });
+        await alert.present();
+      }
+    }
+  }
+
+  async initData() {
+    var drs = false;
+    var delifetch = false;
     await this.loading.PresentLoading();
-    // this.deliveries
-    //   .filter(x => x.isChecked)
-    //   .forEach(y => {
-    //     y.isChecked = false;
-    //   });
-    await this.loading.changeText("Fetching DRS");
-    const deliveryRoute = await this.storage.getDeliveryRouting();
-    for (const item of deliveryRoute) {
-      const data = (await this.api.getDeliveries(item.RouteCode)).data.Results;
-      this.deliDRSes.push(...data);
+    this.loading.changeText("Fetching DRS");
+    while (!drs) {
+      const deliveryRoute = await this.storage.getDeliveryRouting();
+      try {
+        this.deliDRSes = [];
+        for (const item of deliveryRoute) {
+          const data = (await this.api.getDeliveries(item.RouteCode)).data.Results;
+          this.deliDRSes.push(...data);
+        }
+        drs = true;
+      } catch (error) {
+        this.loading.changeText("Retrying DRS Fetch");
+        await delay(1500);
+      }
     }
 
-    for (const deli of this.deliDRSes) {
-      const data = await this.api.getDeliveryTasks(deli.DrsNo);
-      const successful = data.data.Results.filter(f => {
-        return f.IsSuccessful || f.IsFailed;
-      });
-      const pendings = data.data.Results.filter(f => {
-        return !f.IsSuccessful && !f.IsFailed;
-      });
-      this.dataDeliveries.push(...pendings);
-      this.completedDeliveries.push(...successful);
-      this.deliveries = this.dataDeliveries;
+    this.loading.changeText("Fetching Task");
+    while (!delifetch) {
+      try {
+        this.dataDeliveries = [];
+        this.completedDeliveries = [];
+        this.deliveries = [];
+        for (const deli of this.deliDRSes) {
+          const data = await this.api.getDeliveryTasks(deli.DrsNo);
+          const successful = data.data.Results.filter(f => {
+            return f.IsSuccessful || f.IsFailed;
+          });
+          const pendings = data.data.Results.filter(f => {
+            return !f.IsSuccessful && !f.IsFailed;
+          });
+          this.dataDeliveries.push(...pendings);
+          this.completedDeliveries.push(...successful);
+          this.deliveries = this.dataDeliveries;
+        }
+        delifetch = true;
+      } catch (error) {
+        this.loading.changeText("Retrying Task Fetch");
+        await delay(1500);
+      }
     }
+
     await this.loading.Dismiss();
   }
 

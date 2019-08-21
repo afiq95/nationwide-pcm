@@ -170,6 +170,6 @@ export class PickupSignatureFormPage implements OnInit {
   }
 
   reverse() {
-    this.navCtrl.pop();
+    this.signaturePad.clear();
   }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { ModalController, NavController } from "@ionic/angular";
+import { ModalController, NavController, AlertController } from "@ionic/angular";
 import { DeclinePickupFormPage } from "../decline-pickup-form/decline-pickup-form.page";
 import { PCAApiService } from "src/app/services/pcaapi.service";
 import { LoadingService } from "src/app/services/loading.service";
@@ -27,7 +27,8 @@ export class PickupListPage implements OnInit {
     private storage: LocalStorageService,
     private callNumber: CallNumber,
     private hereApi: HereAPIService,
-    private geolocation: Geolocation
+    private geolocation: Geolocation,
+    public alertController: AlertController
   ) {}
   async ngOnInit() {}
 
@@ -35,67 +36,73 @@ export class PickupListPage implements OnInit {
     this.callNumber.callNumber(item, false);
   }
 
-  async ionViewWillEnter() {
-    await this.loading.PresentLoading();
-    this.pickups = [];
-    const pickupRouteCodes = await this.storage.getPickupRouting();
-    for (const code of pickupRouteCodes) {
-      var data: any[] = (await this.api.getPickupByRouteCode(code.RouteCode)).data.Results;
-      data = data.map(x => {
-        const diff = moment().diff(moment(x.DateTimeClosed), "minutes");
-        if (moment().isBefore(moment(x.DateTimeClosed)) && diff < 60) {
-          x.isLate = true;
-        } else {
-          x.isLate = false;
-        }
-        x.isLoadingCoords = false;
-        x.longitude = 0;
-        x.latitude = 0;
-        x.distance = "";
-        x.time = "";
-        return { ...x };
-      });
-      this.pickups.push(...data);
-      // this.geolocation.getCurrentPosition().then(where => {
-      //   this.pickups.forEach(element => {
-      //     this.hereApi.GetCoordinates(element.Address).then(coords => {
-      //       const parsed = JSON.parse(coords.data);
-      //       const json = parsed.Response;
-      //       if (json.View.length > 0) {
-      //         const result = json.View[0].Result[0].Location.NavigationPosition[0];
-      //         element.longitude = result.Longitude;
-      //         element.latitude = result.Latitude;
-      //         this.hereApi
-      //           .GetETA(
-      //             where.coords.latitude,
-      //             where.coords.longitude,
-      //             element.latitude,
-      //             element.longitude
-      //           )
-      //           .then(eta => {
-      //             const etaParsed = JSON.parse(eta.data);
-      //             const etaData = etaParsed.response;
-      //             const routeSummary = etaData.route[0].summary;
-      //             element.time = Math.round(routeSummary.travelTime / 60);
-      //             element.distance = Math.round((routeSummary.distance / 1000) * 100) / 100;
-      //             console.log(element);
-      //           });
-      //       }
-      //     });
-      //   });
-      // });
-    }
+  async initData() {
+    try {
+      await this.loading.PresentLoading();
+      this.pickups = [];
+      const pickupRouteCodes = await this.storage.getPickupRouting();
+      for (const code of pickupRouteCodes) {
+        var data: any[] = (await this.api.getPickupByRouteCode(code.RouteCode)).data.Results;
+        data = data.map(x => {
+          const diff = moment().diff(moment(x.DateTimeClosed), "minutes");
+          if (moment().isBefore(moment(x.DateTimeClosed)) && diff < 60) {
+            x.isLate = true;
+          } else {
+            x.isLate = false;
+          }
+          x.isLoadingCoords = false;
+          x.longitude = 0;
+          x.latitude = 0;
+          x.distance = "";
+          x.time = "";
+          return { ...x };
+        });
+        this.pickups.push(...data);
+      }
 
-    this.pendings = this.pickups.filter(x => {
-      return !x.IsCompleted;
-    });
-    this.completed = this.pickups.filter(x => {
-      return x.IsCompleted;
-    });
-    await this.loading.Dismiss();
+      this.pendings = this.pickups.filter(x => {
+        return !x.IsCompleted;
+      });
+      this.completed = this.pickups.filter(x => {
+        return x.IsCompleted;
+      });
+      await this.loading.Dismiss();
+    } catch (ex) {
+      await this.loading.Dismiss();
+      const retryLoad = await this.warn();
+      if (retryLoad) await this.initData();
+      else this.navCtrl.navigateRoot("/tabs/dashboard", { replaceUrl: true });
+    }
+  }
+  async ionViewWillEnter() {
+    await this.initData();
   }
 
-  async ionViewDidEnter() {}
+  async warn(): Promise<boolean> {
+    return new Promise(async resolve => {
+      const confirm = await this.alertController.create({
+        header: "Error",
+        message: "Error Fetching Pickup (Check your internet connection)",
+        buttons: [
+          {
+            text: "Retry",
+            handler: () => {
+              return resolve(true);
+            }
+          },
+          {
+            text: "OK",
+            role: "cancel",
+            handler: () => {
+              return resolve(false);
+            }
+          }
+        ]
+      });
+
+      await confirm.present();
+    });
+  }
 
   async openDeclineForm(item) {
     const modal = await this.modalController.create({
