@@ -3,9 +3,12 @@ import { SignaturePad } from "angular2-signaturepad/signature-pad";
 import { Router } from "@angular/router";
 import { PCAApiService } from "src/app/services/pcaapi.service";
 import { LoadingService } from "src/app/services/loading.service";
-import { NavController } from "@ionic/angular";
+import { NavController, AlertController } from "@ionic/angular";
 import { Camera } from "@ionic-native/camera/ngx";
 import { Base64 } from "@ionic-native/base64/ngx";
+import { LocalStorageService } from "src/app/services/local-storage.service";
+import { delay } from "q";
+import { del } from "selenium-webdriver/http";
 @Component({
   selector: "app-signature-form",
   templateUrl: "./signature-form.page.html",
@@ -29,7 +32,9 @@ export class SignatureFormPage implements OnInit {
     private loading: LoadingService,
     private navCtrl: NavController,
     private camera: Camera,
-    private base64: Base64
+    private base64: Base64,
+    private storage: LocalStorageService,
+    private alertCtrl: AlertController
   ) {}
 
   ngOnInit() {
@@ -42,16 +47,73 @@ export class SignatureFormPage implements OnInit {
   }
 
   async done() {
+    var isUploadedFile = false;
+    var isUploadedAttachment = false;
+    var isPost = false;
+    var file = null;
+    var attach = null;
+    if (this.signaturePad.isEmpty()) {
+      const alert = await this.alertCtrl.create({
+        animated: true,
+        backdropDismiss: true,
+        message: "Signature cannot be empty",
+        keyboardClose: true,
+        buttons: [
+          {
+            text: "OK",
+            role: "cancel"
+          }
+        ]
+      });
+      await alert.present();
+      return;
+    }
+
     await this.loading.PresentLoading();
-    const file = await this.UploadFile();
-    const attach = await this.uploadAttachment();
+
+    this.loading.changeText("Uploading Signature");
+    while (!isUploadedFile) {
+      try {
+        file = await this.UploadFile();
+        isUploadedFile = true;
+      } catch (error) {
+        this.loading.changeText("Retrying Signature Upload");
+        await delay(1500);
+      }
+    }
+
+    this.loading.changeText("Uploading Attachment");
+    while (!isUploadedAttachment) {
+      try {
+        attach = await this.uploadAttachment();
+        isUploadedAttachment = true;
+      } catch (error) {
+        this.loading.changeText("Retrying Attachment Upload");
+        await delay(1500);
+      }
+    }
+
+    const mode = await this.storage.getVehicleMode();
+    const courierId = await this.storage.getCourierId();
     const data = this.deliveries.map(x => {
       x.AttachmentUrl = attach.data.PhotoUrl;
       x.SignatureUrl = file.data.PhotoUrl;
+      x.Mode = mode;
+      x.CourierId = courierId;
       return { ...x };
     });
-    console.log(data);
-    await this.api.successDeliveryTask(data);
+
+    this.loading.changeText("Uploading Task");
+    while (!isPost) {
+      try {
+        await this.api.successDeliveryTask(data);
+        isPost = true;
+      } catch (error) {
+        this.loading.changeText("Retrying Task Upload");
+        await delay(1500);
+      }
+    }
+
     this.loading.Dismiss().then(() => {
       this.camera.cleanup();
       this.navCtrl.navigateRoot("/tabs/dashboard", { replaceUrl: true });

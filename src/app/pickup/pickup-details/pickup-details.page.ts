@@ -108,6 +108,19 @@ export class PickupDetailsPage implements OnInit {
         ]
       });
       await alert.present();
+    } else if (this.cameraUrl == "") {
+      const alert = await this.alertController.create({
+        animated: true,
+        message: "Please attach an image",
+        header: "Warning",
+        buttons: [
+          {
+            role: "cancel",
+            text: "Okay"
+          }
+        ]
+      });
+      await alert.present();
     } else if (
       this.parcelCn == 0 &&
       this.parcelPkg == 0 &&
@@ -152,6 +165,7 @@ export class PickupDetailsPage implements OnInit {
       }
       const item = {
         taskId: this.pickup.Id,
+        PickupId: this.pickup.PickupId,
         docPkg: this.docPkg,
         docCn: this.docCn,
         parcelPkg: this.parcelPkg,
@@ -172,15 +186,15 @@ export class PickupDetailsPage implements OnInit {
       .getPicture({
         cameraDirection: 0,
         destinationType: this.camera.DestinationType.FILE_URI,
-        encodingType: this.camera.EncodingType.PNG,
+        encodingType: this.camera.EncodingType.JPEG,
         mediaType: this.camera.MediaType.PICTURE,
-        quality: 20,
+        quality: 70,
         allowEdit: false,
         correctOrientation: false,
         saveToPhotoAlbum: false,
         sourceType: this.camera.PictureSourceType.CAMERA,
-        targetHeight: 1000,
-        targetWidth: 1000
+        targetHeight: 1200,
+        targetWidth: 1200
       })
       .then(res => {
         this.rawUrl = res;

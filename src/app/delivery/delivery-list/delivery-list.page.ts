@@ -14,6 +14,7 @@ import { PCAApiService } from "src/app/services/pcaapi.service";
 export class DeliveryListPage {
   checked: any[] = [];
   deliveries: any[] = [];
+  dataDeliveries: any[] = [];
   deliDRSes: any[] = [];
   completedDeliveries: any[] = [];
   status = "pending";
@@ -29,6 +30,7 @@ export class DeliveryListPage {
     this.checked = [];
     this.completedDeliveries = [];
     this.deliveries = [];
+    this.dataDeliveries = [];
     this.deliDRSes = [];
   }
   async ionViewWillEnter() {
@@ -38,7 +40,7 @@ export class DeliveryListPage {
     //   .forEach(y => {
     //     y.isChecked = false;
     //   });
-
+    await this.loading.changeText("Fetching DRS");
     const deliveryRoute = await this.storage.getDeliveryRouting();
     for (const item of deliveryRoute) {
       const data = (await this.api.getDeliveries(item.RouteCode)).data.Results;
@@ -48,13 +50,14 @@ export class DeliveryListPage {
     for (const deli of this.deliDRSes) {
       const data = await this.api.getDeliveryTasks(deli.DrsNo);
       const successful = data.data.Results.filter(f => {
-        return f.IsDelivered;
+        return f.IsSuccessful || f.IsFailed;
       });
       const pendings = data.data.Results.filter(f => {
-        return !f.IsDelivered;
+        return !f.IsSuccessful && !f.IsFailed;
       });
-      this.deliveries.push(...pendings);
+      this.dataDeliveries.push(...pendings);
       this.completedDeliveries.push(...successful);
+      this.deliveries = this.dataDeliveries;
     }
     await this.loading.Dismiss();
   }
@@ -71,18 +74,19 @@ export class DeliveryListPage {
 
   clearAll() {
     this.checked = [];
-    this.deliveries
+    this.dataDeliveries
       .filter(x => x.isChecked)
       .forEach(y => {
         y.isChecked = false;
       });
+    this.deliveries = this.dataDeliveries;
   }
 
   proceed() {
     this.navCtrl.navigateForward("/delivery-check-list", {
       state: {
         items: this.checked,
-        existed: this.deliveries
+        existed: this.dataDeliveries
       }
     });
   }
@@ -92,13 +96,13 @@ export class DeliveryListPage {
       .scan()
       .then((barcodeData: BarcodeScanResult) => {
         if (!barcodeData.cancelled) {
-          const found = this.deliveries.find(x => {
+          const found = this.dataDeliveries.find(x => {
             return x.CnNo.toLowerCase() == barcodeData.text.substring(0, 8).toLowerCase();
           });
           this.navCtrl.navigateForward("/delivery-check-list", {
             state: {
               items: [found],
-              existed: this.deliveries
+              existed: this.dataDeliveries
             },
             replaceUrl: true
           });
@@ -111,5 +115,18 @@ export class DeliveryListPage {
 
   change(item) {
     this.status = item;
+  }
+
+  searchCn(item) {
+    if (item.detail.value == "") {
+      this.deliveries = this.dataDeliveries;
+      return;
+    }
+    const found = this.dataDeliveries.filter(x => {
+      console.log(x.CnNo.toLowerCase());
+      return x.CnNo.toLowerCase().search(item.detail.value.toLowerCase()) > -1;
+    });
+
+    this.deliveries = found;
   }
 }

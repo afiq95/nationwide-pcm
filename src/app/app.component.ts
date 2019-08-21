@@ -70,17 +70,25 @@ export class AppComponent {
       //     this.storage.getUserId().then(uid =>)
       //   });
       // });
-      this.api.getDuty().then((res: any) => {
-        if (res.data.Results.length > 0) {
-          console.log("here");
-          this.storage.setDutyId(res.data.Results[0].Id);
-          this.event.publish("dutyChanged", true);
-        } else {
-          this.storage.setDutyId("");
-          this.event.publish("dutyChanged", false);
-        }
+      // this.api.getDuty().then((res: any) => {
+      //   if (res.data.Results.length > 0) {
+      //     console.log("here");
+      //     this.storage.setDutyId(res.data.Results[0].Id);
+      //     this.event.publish("dutyChanged", true);
+      //   } else {
+      //     this.storage.setDutyId("");
+      //     this.event.publish("dutyChanged", false);
+      //   }
+      // });
+      this.storage.getApiToken().then(token => {
+        this.storage.getRefreshToken().then(refresh => {
+          this.api.refreshToken(token, refresh).then(res => {
+            this.storage.setApiToken(res.data.token).then(() => {
+              this.storage.setRefreshToken(res.data.refreshToken);
+            });
+          });
+        });
       });
-
       this.statusBar.hide();
       this.statusBar.styleLightContent();
       this.splashScreen.hide();

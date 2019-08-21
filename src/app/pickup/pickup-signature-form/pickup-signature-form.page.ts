@@ -2,9 +2,10 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
 import { PCAApiService } from "src/app/services/pcaapi.service";
 import { LoadingService } from "src/app/services/loading.service";
-import { NavController } from "@ionic/angular";
+import { NavController, AlertController } from "@ionic/angular";
 import { SignaturePad } from "angular2-signaturepad/signature-pad";
 import { Base64 } from "@ionic-native/base64/ngx";
+import { delay } from "q";
 
 @Component({
   selector: "app-pickup-signature-form",
@@ -27,7 +28,8 @@ export class PickupSignatureFormPage implements OnInit {
     private navCtrl: NavController,
     private api: PCAApiService,
     private loading: LoadingService,
-    private base64: Base64
+    private base64: Base64,
+    public alertCtrl: AlertController
   ) {}
 
   ngOnInit() {
@@ -39,9 +41,7 @@ export class PickupSignatureFormPage implements OnInit {
   }
 
   async uploadAttachment() {
-    debugger;
     await this.base64.encodeFile(this.imgUrl).then(async img => {
-      debugger;
       var fd = new FormData();
       fd.append(
         "files",
@@ -102,16 +102,66 @@ export class PickupSignatureFormPage implements OnInit {
   }
 
   async done() {
-    await this.loading.PresentLoading();
+    if (this.signaturePad.isEmpty()) {
+      const alert = await this.alertCtrl.create({
+        animated: true,
+        backdropDismiss: true,
+        message: "Signature cannot be empty",
+        keyboardClose: true,
+        buttons: [
+          {
+            text: "OK",
+            role: "cancel"
+          }
+        ]
+      });
+      await alert.present();
+      return;
+    }
     if (this.pickup.pickupStatus == "success") {
       this.pickup.IsCompleted = true;
       this.pickup.IsPickedUp = true;
     } else {
       this.pickup.IsCompleted = true;
     }
-    await this.api.completeTask(this.pickup);
-    await this.uploadAttachment();
-    await this.UploadFile();
+
+    var isUploadedFile = false;
+    var isUploadedAttachment = false;
+    var isPost = false;
+
+    await this.loading.PresentLoading();
+    this.loading.changeText("Uploading Signature");
+    while (!isUploadedAttachment) {
+      try {
+        await this.uploadAttachment();
+        isUploadedAttachment = true;
+      } catch (error) {
+        this.loading.changeText("Retrying Signature Upload");
+        await delay(1500);
+      }
+    }
+
+    this.loading.changeText("Uploading Attachment");
+    while (!isUploadedFile) {
+      try {
+        await this.UploadFile();
+        isUploadedFile = true;
+      } catch (error) {
+        this.loading.changeText("Retrying Attachment Upload");
+        await delay(1500);
+      }
+    }
+
+    this.loading.changeText("Uploading Task");
+    while (!isPost) {
+      try {
+        await this.api.completeTask(this.pickup);
+        isPost = true;
+      } catch (error) {
+        this.loading.changeText("Retrying Task Upload");
+        await delay(1500);
+      }
+    }
 
     setTimeout(async () => {
       await this.loading.Dismiss();

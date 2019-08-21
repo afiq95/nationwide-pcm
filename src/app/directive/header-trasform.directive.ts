@@ -46,7 +46,11 @@ export class HeaderTrasformDirective {
     this.domCtrl.write(() => {
       this.renderer.setStyle(this.element.nativeElement, "background", "white");
       this.element.nativeElement.querySelectorAll("ion-title")[0].setAttribute("color", "dark");
-      this.element.nativeElement.querySelectorAll("ion-label")[0].setAttribute("color", "dark");
+      this.element.nativeElement
+        .querySelectorAll("ion-buttons")[0]
+        .querySelector("ion-back-button")
+        .setAttribute("color", "dark");
+      // this.element.nativeElement.querySelectorAll("ion-label")[0].setAttribute("color", "dark");
     });
 
     this.hidden = true;
@@ -57,7 +61,11 @@ export class HeaderTrasformDirective {
       // this.renderer.setStyle(this.element.nativeElement, "height", "44px");
       this.renderer.setStyle(this.element.nativeElement, "background", "rgba(0,0,0,0)");
       this.element.nativeElement.querySelectorAll("ion-title")[0].setAttribute("color", "light");
-      this.element.nativeElement.querySelectorAll("ion-label")[0].setAttribute("color", "light");
+      // this.element.nativeElement.querySelectorAll("ion-label")[0].setAttribute("color", "light");
+      this.element.nativeElement
+        .querySelectorAll("ion-buttons")[0]
+        .querySelector("ion-back-button")
+        .setAttribute("color", "light");
     });
 
     this.hidden = false;
