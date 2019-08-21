@@ -31,6 +31,14 @@ export class LocalStorageService {
     return await this.storage.get(USERID);
   }
 
+  async setRefreshToken(item) {
+    return await this.storage.set(REFRESHTOKEN, item);
+  }
+
+  async getRefreshToken() {
+    return await this.storage.get(REFRESHTOKEN);
+  }
+
   async setStaffId(item) {
     return await this.storage.set(STAFFID, item);
   }
@@ -117,6 +125,10 @@ export class LocalStorageService {
   async setDeliveryRouting(item) {
     return await this.storage.set(DELIVERYROUTE, item);
   }
+
+  async clear() {
+    return await this.storage.clear();
+  }
 }
 
 const FCMTOKEN: string = "FCMTOKEN";
@@ -129,3 +141,4 @@ const PICKUPROUTE: string = "PICKUPROUTE";
 const DELIVERYROUTE: string = "DELIVERYROUTE";
 const COURIERID: string = "COURIERID";
 const VEHICLEMODE: string = "VEHICLEMODE";
+const REFRESHTOKEN: string = "REFRESHTOKEN";

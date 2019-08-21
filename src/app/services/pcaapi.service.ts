@@ -41,6 +41,13 @@ export class PCAApiService {
     });
   }
 
+  async refreshToken(token: string, refreshToken: string) {
+    return await Axios.post(BASEURL + "/api/authorization/refresh", {
+      token: token,
+      refreshToken: refreshToken
+    });
+  }
+
   async updateFcmToken(token: string, userId: string) {
     await this.initAxios();
     return await this.axios.post("/api/fcmtokens", {
@@ -73,6 +80,7 @@ export class PCAApiService {
   async completeTask(item) {
     await this.initAxios();
     return await this.axios.post("/api/pickup/" + item.taskId + "/complete", {
+      PickupId: item.PickupId,
       ParcelConsignmentCount: item.parcelCn,
       ParcelPackageCount: item.parcelPkg,
       DocumentConsignmentCount: item.docCn,

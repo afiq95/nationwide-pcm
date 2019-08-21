@@ -12,12 +12,17 @@
 <ion-content #scrollArea scrollEvents="true" fullscreen>
   <ion-grid fixed>
     <ion-row class="ion-align-items-center" class="transition-right">
-      <ion-col class="ion-padding-start" size="12">
+      <ion-col class="ion-padding-start" size="8">
         <ion-text class="roboto-regular" color="light">
           <h2 class="ion-no-margin">
             {{ courierId }}
           </h2>
         </ion-text>
+      </ion-col>
+      <ion-col class="ion-padding-start ion-text-right" size="4">
+        <ion-button shape="round" size="small" color="light" (click)="logout()" mode="ios">
+          Logout
+        </ion-button>
       </ion-col>
       <!-- <ion-col class="ion-text-right ion-padding-end" size="6">
         <ion-button filL="outline" shape="round" size="small" color="light">

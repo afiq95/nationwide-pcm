@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { Camera } from "@ionic-native/camera/ngx";
 import { PCAApiService } from "src/app/services/pcaapi.service";
-import { NavController } from "@ionic/angular";
+import { NavController, AlertController } from "@ionic/angular";
 import { Base64 } from "@ionic-native/base64/ngx";
 import { LocalStorageService } from "src/app/services/local-storage.service";
 
@@ -52,7 +52,8 @@ export class DeliveryConfirmationPage implements OnInit {
     private camera: Camera,
     private api: PCAApiService,
     private navCtrl: NavController,
-    private storage: LocalStorageService
+    private storage: LocalStorageService,
+    public alertController: AlertController
   ) {}
 
   ngOnInit() {
@@ -61,20 +62,35 @@ export class DeliveryConfirmationPage implements OnInit {
     if (state) this.deliveries = state.items;
   }
 
-  goToSignature() {
-    const data = this.deliveries.map(x => {
-      x.ReceiverIdentification = this.receiverId;
-      x.ReceiverName = this.receiverName;
-      return { ...x };
-    });
-    this.router.navigate(["/signature-form"], {
-      state: {
-        deliveries: data,
-        drsNo: this.deliveries[0].DrsNo,
-        imgUrl: this.cameraUrl,
-        rawUrl: this.rawUrl
-      }
-    });
+  async goToSignature() {
+    if (this.cameraUrl == "") {
+      const alert = await this.alertController.create({
+        animated: true,
+        message: "Please attach an image",
+        header: "Warning",
+        buttons: [
+          {
+            role: "cancel",
+            text: "Okay"
+          }
+        ]
+      });
+      await alert.present();
+    } else {
+      const data = this.deliveries.map(x => {
+        x.ReceiverIdentification = this.receiverId;
+        x.ReceiverName = this.receiverName;
+        return { ...x };
+      });
+      this.router.navigate(["/signature-form"], {
+        state: {
+          deliveries: data,
+          drsNo: this.deliveries[0].DrsNo,
+          imgUrl: this.cameraUrl,
+          rawUrl: this.rawUrl
+        }
+      });
+    }
   }
 
   async done() {
@@ -98,15 +114,15 @@ export class DeliveryConfirmationPage implements OnInit {
       .getPicture({
         cameraDirection: 0,
         destinationType: this.camera.DestinationType.FILE_URI,
-        encodingType: this.camera.EncodingType.PNG,
+        encodingType: this.camera.EncodingType.JPEG,
         mediaType: this.camera.MediaType.PICTURE,
-        quality: 20,
+        quality: 70,
         allowEdit: false,
         correctOrientation: false,
         saveToPhotoAlbum: false,
         sourceType: this.camera.PictureSourceType.CAMERA,
-        targetHeight: 1000,
-        targetWidth: 1000
+        targetHeight: 1200,
+        targetWidth: 1200
       })
       .then(res => {
         this.rawUrl = res;

@@ -27,6 +27,10 @@ export class LoadingService {
     });
   }
 
+  changeText(item) {
+    this.loading.message = item;
+  }
+
   async Dismiss() {
     await this.loading.dismiss();
     this.loading = null;

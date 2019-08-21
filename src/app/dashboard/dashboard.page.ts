@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 import { LocalStorageService } from "../services/local-storage.service";
 import { PCAApiService } from "../services/pcaapi.service";
 import { NavController, AlertController, IonSelect } from "@ionic/angular";
+import { LoadingService } from "../services/loading.service";
 
 @Component({
   selector: "app-dashboard",
@@ -30,7 +31,8 @@ export class DashboardPage {
     private storage: LocalStorageService,
     private api: PCAApiService,
     private navCtrl: NavController,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private loading: LoadingService
   ) {}
 
   async ionViewWillEnter() {
@@ -134,5 +136,12 @@ export class DashboardPage {
 
   async onModeChange(item) {
     await this.storage.setVehicleMode(item.detail.value);
+  }
+
+  async logout() {
+    await this.storage.clear();
+    await this.navCtrl.navigateRoot("/login", {
+      replaceUrl: true
+    });
   }
 }

@@ -40,7 +40,7 @@ export class DeliveryListPage {
     //   .forEach(y => {
     //     y.isChecked = false;
     //   });
-
+    await this.loading.changeText("Fetching DRS");
     const deliveryRoute = await this.storage.getDeliveryRouting();
     for (const item of deliveryRoute) {
       const data = (await this.api.getDeliveries(item.RouteCode)).data.Results;

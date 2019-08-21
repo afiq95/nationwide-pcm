@@ -11,7 +11,8 @@ export class AuthGuardService implements CanActivate {
   async canActivate(): Promise<boolean> {
     const uid = await this.storage.getUserId();
     const token = await this.storage.getApiToken();
-    if (uid && token) return true;
+    const tokenRefresh = await this.storage.getRefreshToken();
+    if (uid && token && tokenRefresh) return true;
     else {
       this.router.navigate(["/login"]);
       return false;
