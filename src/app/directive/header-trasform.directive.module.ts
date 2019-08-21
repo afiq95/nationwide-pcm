@@ -7,4 +7,3 @@ import { HeaderTrasformDirective } from "./header-trasform.directive";
   exports: [HeaderTrasformDirective]
 })
 export class HeaderTrasformDirectiveModule {}
-  

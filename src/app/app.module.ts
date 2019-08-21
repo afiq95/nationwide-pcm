@@ -10,6 +10,7 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { PcaHeaderComponentModule } from "./components/pca-header/pca-header.module";
 import { HeaderTrasformDirective } from "./directive/header-trasform.directive";
+import { DeliveryService } from "./services/delivery.service";
 import { DeclinePickupFormPageModule } from "./pickup/decline-pickup-form/decline-pickup-form.module";
 import { BarcodeScanner } from "@ionic-native/barcode-scanner/ngx";
 import { CallNumber } from "@ionic-native/call-number/ngx";
@@ -43,6 +44,7 @@ import { Geolocation } from "@ionic-native/geolocation/ngx";
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    DeliveryService,
     BarcodeScanner,
     AndroidPermissions,
     QrCodeService,

@@ -36,6 +36,8 @@ export class LoginPage implements OnInit {
     await this.storage.setUserId(res.data.UserId);
     await this.storage.setStaffId(res.data.StaffId);
     await this.storage.setCourierId(this.myForm.value.Username);
+    // const token = await this.fcm.initToken();
+    // await this.apiService.updateFcmToken(token, res.data.UserId);
     this.router
       .navigate(["/tabs/dashboard"], {
         replaceUrl: true

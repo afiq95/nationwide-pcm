@@ -17,6 +17,7 @@ export class PickupSignatureFormPage implements OnInit {
   @ViewChild(SignaturePad) signaturePad: SignaturePad;
 
   public signaturePadOptions: Object = {
+    // passed through to szimek/signature_pad constructor
     minWidth: 5,
     canvasWidth: 280,
     canvasHeight: 250
@@ -52,6 +53,7 @@ export class PickupSignatureFormPage implements OnInit {
   }
 
   dataURItoBlob(dataURI) {
+    // convert base64/URLEncoded data component to raw binary data held in a string
     var byteString;
     if (dataURI.split(",")[0].indexOf("base64") >= 0) byteString = atob(dataURI.split(",")[1]);
     else byteString = encodeURI(dataURI.split(",")[1]);
@@ -60,6 +62,7 @@ export class PickupSignatureFormPage implements OnInit {
       .split(":")[1]
       .split(";")[0];
 
+    // write the bytes of the string to a typed array
     var ia = new Uint8Array(byteString.length);
     for (var i = 0; i < byteString.length; i++) {
       ia[i] = byteString.charCodeAt(i);

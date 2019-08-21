@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { ModalController } from "@ionic/angular";
+import { Router } from "@angular/router";
 import { PCAApiService } from "src/app/services/pcaapi.service";
 
 @Component({
@@ -14,6 +15,7 @@ export class DeclinePickupFormPage implements OnInit {
 
   constructor(
     public modalController: ModalController,
+    private router: Router,
     private api: PCAApiService
   ) {}
 

@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { NavController, AlertController, ToastController } from "@ionic/angular";
 import { BarcodeScanner, BarcodeScanResult } from "@ionic-native/barcode-scanner/ngx";
+import { QrCodeService } from "src/app/services/qr-code.service";
 
 @Component({
   selector: "app-delivery-check-list",

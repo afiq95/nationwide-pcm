@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { LocalStorageService } from "src/app/services/local-storage.service";
 import { Events, AlertController } from "@ionic/angular";
 import { PCAApiService } from "src/app/services/pcaapi.service";
+import { AngularWaitBarrier } from "blocking-proxy/built/lib/angular_wait_barrier";
 
 @Component({
   selector: "app-pca-header",
