@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 import { LocalStorageService } from "../services/local-storage.service";
 import { PCAApiService } from "../services/pcaapi.service";
 import { NavController, AlertController, IonSelect } from "@ionic/angular";
-import { LoadingService } from "../services/loading.service";
 
 @Component({
   selector: "app-dashboard",
@@ -31,18 +30,11 @@ export class DashboardPage {
     private storage: LocalStorageService,
     private api: PCAApiService,
     private navCtrl: NavController,
-    private alertController: AlertController,
-    private loading: LoadingService
+    private alertController: AlertController
   ) {}
 
   async ionViewWillEnter() {
     this.courierId = await this.storage.getCourierId();
-    // this.pickup = {
-    //   Failed: (await this.api.GetPickupCount("failed")).data.Count,
-    //   Successful: (await this.api.GetPickupCount("pickedup")).data.Count,
-    //   Pending: (await this.api.GetPickupCount("accepted")).data.Count,
-    //   Total: (await this.api.GetPickupCount("today")).data.Count
-    // };
     this.pickup = {
       Failed: 0,
       Pending: 0,

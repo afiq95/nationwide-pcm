@@ -103,7 +103,7 @@ export class PickupDetailsPage implements OnInit {
         buttons: [
           {
             role: "cancel",
-            text: "Okay"
+            text: "OK"
           }
         ]
       });
@@ -116,7 +116,7 @@ export class PickupDetailsPage implements OnInit {
         buttons: [
           {
             role: "cancel",
-            text: "Okay"
+            text: "OK"
           }
         ]
       });
@@ -135,7 +135,7 @@ export class PickupDetailsPage implements OnInit {
         buttons: [
           {
             role: "cancel",
-            text: "Okay"
+            text: "OK"
           }
         ]
       });
@@ -151,7 +151,7 @@ export class PickupDetailsPage implements OnInit {
         buttons: [
           {
             role: "cancel",
-            text: "Okay"
+            text: "OK"
           }
         ]
       });
@@ -198,7 +198,7 @@ export class PickupDetailsPage implements OnInit {
       })
       .then(res => {
         this.rawUrl = res;
-        let win: any = window; // hack ionic/angular compilator
+        let win: any = window;
 
         const myURL = win.Ionic.WebView.convertFileSrc(res);
         console.log(myURL);
