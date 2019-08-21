@@ -1,5 +1,4 @@
-import { Component, OnInit } from "@angular/core";
-import { DeliveryService } from "src/app/services/delivery.service";
+import { Component } from "@angular/core";
 import { NavController } from "@ionic/angular";
 import { BarcodeScanner, BarcodeScanResult } from "@ionic-native/barcode-scanner/ngx";
 import { LocalStorageService } from "src/app/services/local-storage.service";
@@ -33,12 +32,6 @@ export class DeliveryListPage {
   }
   async ionViewWillEnter() {
     await this.loading.PresentLoading();
-    // this.deliveries
-    //   .filter(x => x.isChecked)
-    //   .forEach(y => {
-    //     y.isChecked = false;
-    //   });
-
     const deliveryRoute = await this.storage.getDeliveryRouting();
     for (const item of deliveryRoute) {
       const data = (await this.api.getDeliveries(item.RouteCode)).data.Results;

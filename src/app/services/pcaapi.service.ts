@@ -34,6 +34,7 @@ export class PCAApiService {
     );
   }
 
+  //API for authorization and token
   async login(username: string, password: string) {
     return await Axios.post(BASEURL + "/api/authorization", {
       CourierId: username,
@@ -48,7 +49,9 @@ export class PCAApiService {
       UserId: userId
     });
   }
+  //
 
+  //API Pickup
   async getPickupListings() {
     await this.initAxios();
     const staffId = await this.storage.getStaffId();
@@ -60,6 +63,32 @@ export class PCAApiService {
     return await this.axios.get("/api/pickup/routeCode/" + routeCode);
   }
 
+  async GetPickupCount(item) {
+    await this.initAxios();
+    const staffId = await this.storage.getStaffId();
+    return await this.axios.get(`/api/pickup/count/${staffId}/${item}`);
+  }
+
+  async uploadPickupSignature(pickupId, formdata) {
+    let uploadInstance = Axios.create({
+      baseURL: BASEURL,
+      headers: { "Content-Type": "multipart/form-data", Authorization: "Bearer " + this.token }
+    });
+    var post = await uploadInstance.post("/api/image/pickup/signature/" + pickupId, formdata);
+    return post;
+  }
+
+  async sendPickupAttachment(pickupId, formdata) {
+    let uploadInstance = Axios.create({
+      baseURL: BASEURL,
+      headers: { "Content-Type": "multipart/form-data", Authorization: "Bearer " + this.token }
+    });
+    var post = await uploadInstance.post("/api/image/pickup/attachment/" + pickupId, formdata);
+    return post;
+  }
+  //
+
+  //API Task
   async acceptTask(taskId) {
     await this.initAxios();
     return await this.axios.post("/api/pickup/" + taskId + "/accept");
@@ -83,7 +112,9 @@ export class PCAApiService {
       PickupCode: item.pickupCode
     });
   }
+  //
 
+  //API Duty
   async startDuty() {
     await this.initAxios();
     const staffId = await this.storage.getStaffId();
@@ -101,13 +132,9 @@ export class PCAApiService {
     const staffId = await this.storage.getStaffId();
     return await this.axios.get("/api/duty/" + staffId);
   }
+  //
 
-  async GetPickupCount(item) {
-    await this.initAxios();
-    const staffId = await this.storage.getStaffId();
-    return await this.axios.get(`/api/pickup/count/${staffId}/${item}`);
-  }
-
+  //API Routing
   async InsertRoutingCode(item) {
     await this.initAxios();
     return await this.axios.post(`/api/routehistory`, item);
@@ -117,7 +144,9 @@ export class PCAApiService {
     await this.initAxios();
     return await this.axios.put(`/api/routehistory/routeid/${item.Id}`);
   }
+  //
 
+  //API Delivery
   async getDeliveries(routeCode) {
     await this.initAxios();
     return await this.axios.get(`/api/delivery/route/${routeCode}`);
@@ -147,24 +176,6 @@ export class PCAApiService {
     return post;
   }
 
-  async uploadPickupSignature(pickupId, formdata) {
-    let uploadInstance = Axios.create({
-      baseURL: BASEURL,
-      headers: { "Content-Type": "multipart/form-data", Authorization: "Bearer " + this.token }
-    });
-    var post = await uploadInstance.post("/api/image/pickup/signature/" + pickupId, formdata);
-    return post;
-  }
-
-  async sendPickupAttachment(pickupId, formdata) {
-    let uploadInstance = Axios.create({
-      baseURL: BASEURL,
-      headers: { "Content-Type": "multipart/form-data", Authorization: "Bearer " + this.token }
-    });
-    var post = await uploadInstance.post("/api/image/pickup/attachment/" + pickupId, formdata);
-    return post;
-  }
-
   async SendDeliveryAttachment(drsNo, formData) {
     let uploadInstance = Axios.create({
       baseURL: BASEURL,
@@ -176,6 +187,7 @@ export class PCAApiService {
     var post = await uploadInstance.post("/api/image/delivery/attachment/" + drsNo, formData);
     return post;
   }
+  //
 }
 
 const BASEURL: string = environment.apiUrl;

@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { LocalStorageService } from "../services/local-storage.service";
 import { PCAApiService } from "../services/pcaapi.service";
 import { NavController } from "@ionic/angular";
