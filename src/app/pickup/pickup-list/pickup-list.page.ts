@@ -78,7 +78,7 @@ export class PickupListPage implements OnInit {
     await this.initData();
   }
 
-  async warn(): Promise<boolean> {
+  async warn() {
     return new Promise(async resolve => {
       const confirm = await this.alertController.create({
         header: "Error",

@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.btsb.nationwideexpresspca" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.btsb.nationwideexpresspca" version="1.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Nationwide</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="hi@ionicframework.com" href="http://ionicframework.com/">Ionic Framework Team</author>
-    <content original-src="index.html" src="http://192.168.0.167:8100" />
+    <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -107,6 +107,6 @@
     <plugin name="mx.ferreyra.callnumber" spec="~0.0.2" />
     <allow-navigation href="http://192.168.0.47:8100" sessionid="5ae81d18" />
     <allow-navigation href="http://192.168.0.39:8100" sessionid="4d46757b" />
-    <allow-navigation href="http://192.168.0.167:8100" sessionid="b7bbdbe5" />
+    <plugin name="cordova-plugin-app-version" spec="0.1.9" />
     <engine name="android" spec="7.1.4" />
 </widget>

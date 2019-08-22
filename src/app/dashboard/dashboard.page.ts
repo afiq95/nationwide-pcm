@@ -3,6 +3,7 @@ import { LocalStorageService } from "../services/local-storage.service";
 import { PCAApiService } from "../services/pcaapi.service";
 import { NavController, AlertController, IonSelect } from "@ionic/angular";
 import { LoadingService } from "../services/loading.service";
+import { AppVersion } from "@ionic-native/app-version/ngx";
 
 @Component({
   selector: "app-dashboard",
@@ -24,7 +25,7 @@ export class DashboardPage {
   };
   isOnDuty = false;
   courierId: "";
-
+  version = "";
   @ViewChild("modeSelect") modeSelect: IonSelect;
   vehicleMode: any;
   constructor(
@@ -32,10 +33,12 @@ export class DashboardPage {
     private api: PCAApiService,
     private navCtrl: NavController,
     private alertController: AlertController,
-    private loading: LoadingService
+    private loading: LoadingService,
+    private appVersion: AppVersion
   ) {}
 
   async ionViewWillEnter() {
+    this.version = await this.appVersion.getVersionNumber();
     this.courierId = await this.storage.getCourierId();
     // this.pickup = {
     //   Failed: (await this.api.GetPickupCount("failed")).data.Count,

@@ -14,6 +14,7 @@ import { DeliveryService } from "./services/delivery.service";
 import { DeclinePickupFormPageModule } from "./pickup/decline-pickup-form/decline-pickup-form.module";
 import { BarcodeScanner } from "@ionic-native/barcode-scanner/ngx";
 import { CallNumber } from "@ionic-native/call-number/ngx";
+import { AppVersion } from "@ionic-native/app-version/ngx";
 import { AndroidPermissions } from "@ionic-native/android-permissions/ngx";
 import { QrCodeService } from "./services/qr-code.service";
 import { Camera } from "@ionic-native/camera/ngx";
@@ -58,7 +59,8 @@ import { Geolocation } from "@ionic-native/geolocation/ngx";
     Base64,
     HereAPIService,
     HTTP,
-    Geolocation
+    Geolocation,
+    AppVersion
   ],
   bootstrap: [AppComponent]
 })
