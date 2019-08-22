@@ -40,12 +40,6 @@ export class DashboardPage {
   async ionViewWillEnter() {
     this.version = await this.appVersion.getVersionNumber();
     this.courierId = await this.storage.getCourierId();
-    // this.pickup = {
-    //   Failed: (await this.api.GetPickupCount("failed")).data.Count,
-    //   Successful: (await this.api.GetPickupCount("pickedup")).data.Count,
-    //   Pending: (await this.api.GetPickupCount("accepted")).data.Count,
-    //   Total: (await this.api.GetPickupCount("today")).data.Count
-    // };
     this.pickup = {
       Failed: 0,
       Pending: 0,

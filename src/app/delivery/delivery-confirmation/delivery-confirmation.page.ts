@@ -3,7 +3,6 @@ import { Router } from "@angular/router";
 import { Camera } from "@ionic-native/camera/ngx";
 import { PCAApiService } from "src/app/services/pcaapi.service";
 import { NavController, AlertController } from "@ionic/angular";
-import { Base64 } from "@ionic-native/base64/ngx";
 import { LocalStorageService } from "src/app/services/local-storage.service";
 
 @Component({
@@ -152,7 +151,7 @@ export class DeliveryConfirmationPage implements OnInit {
       })
       .then(res => {
         this.rawUrl = res;
-        let win: any = window; // hack ionic/angular compilator
+        let win: any = window;
         const myURL = win.Ionic.WebView.convertFileSrc(res);
         this.cameraUrl = myURL;
       });

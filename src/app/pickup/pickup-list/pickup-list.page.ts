@@ -5,9 +5,8 @@ import { PCAApiService } from "src/app/services/pcaapi.service";
 import { LoadingService } from "src/app/services/loading.service";
 import { LocalStorageService } from "src/app/services/local-storage.service";
 import { CallNumber } from "@ionic-native/call-number/ngx";
-import { HereAPIService } from "src/app/services/here-api.service";
-import { Geolocation } from "@ionic-native/geolocation/ngx";
 import * as moment from "moment";
+import { HereAPIService } from "src/app/services/here-api.service";
 @Component({
   selector: "app-pickup-list",
   templateUrl: "./pickup-list.page.html",

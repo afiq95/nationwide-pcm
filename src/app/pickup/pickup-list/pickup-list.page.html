@@ -1,7 +1,6 @@
 <ion-header>
   <ion-toolbar [myScrollVanish]="scrollArea">
     <ion-title color="light">Pickup</ion-title>
-    <!-- <app-master-header slot="end"></app-master-header> -->
   </ion-toolbar>
 </ion-header>
 
@@ -50,9 +49,6 @@
             <ion-col class="ion-no-padding" size="11">
               <span class="text grey roboto-light">{{ pickup.Address }} </span>
             </ion-col>
-            <!-- <ion-col size="12">
-              ETA : {{ pickup.distance }} KM | {{ pickup.time }} Minutes
-            </ion-col> -->
             <ion-col size="" class="ion-text-center"> </ion-col>
             <ion-col size="12" class="ion-text-right" *ngIf="pickup.IsAccepted">
               <ion-button

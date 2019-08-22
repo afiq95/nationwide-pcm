@@ -1,7 +1,5 @@
 import { Injectable } from "@angular/core";
 import { environment } from "../../environments/environment";
-import Axios, { AxiosInstance } from "axios";
-import { HttpClient } from "@angular/common/http";
 import { HTTP } from "@ionic-native/http/ngx";
 @Injectable({
   providedIn: "root"

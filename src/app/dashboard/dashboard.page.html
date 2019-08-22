@@ -1,7 +1,6 @@
 <ion-header>
   <ion-toolbar [myScrollVanish]="scrollArea">
     <ion-title color="light">Dashboard</ion-title>
-    <!-- <app-master-header slot="end"></app-master-header> -->
     <ion-buttons slot="end">
       <ion-label color="light">On Duty</ion-label>
       <ion-toggle color="success" [(ngModel)]="isOnDuty" (click)="changeStatus()"></ion-toggle>
@@ -24,17 +23,6 @@
           Logout
         </ion-button>
       </ion-col>
-      <!-- <ion-col class="ion-text-right ion-padding-end" size="6">
-        <ion-button filL="outline" shape="round" size="small" color="light">
-          Manage
-        </ion-button>
-      </ion-col> -->
-
-      <!-- <ion-col class="ion-margin-horizontal" size="12">
-        <ion-text color="light" class="roboto-light">
-          <h6 class="ion-no-margin"><span class="roboto-regular">Branch :</span> Sentul, KL</h6>
-        </ion-text>
-      </ion-col> -->
       <ion-col size="12" class="ion-no-padding ion-padding-horizontal">
         <ion-item lines="none">
           <ion-label>Vehicle Mode</ion-label>
