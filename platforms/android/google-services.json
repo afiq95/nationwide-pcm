@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "43401087781",
+    "firebase_url": "https://nationwide-pca.firebaseio.com",
+    "project_id": "nationwide-pca",
+    "storage_bucket": "nationwide-pca.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:43401087781:android:653ffbe96663016e",
+        "android_client_info": {
+          "package_name": "com.btsb.nationwideexpresspca"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "43401087781-h552blbda77f32fg0cgmsuqu2j5nhnov.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8-aRBRHh3ohKp0dkmj8sp_ERDglZdaeo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "43401087781-h552blbda77f32fg0cgmsuqu2j5nhnov.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
