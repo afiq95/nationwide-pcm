@@ -38,6 +38,12 @@ export class DashboardPage {
   ) {}
 
   async ionViewWillEnter() {
+    const pickupFailCode = (await this.api.getPickupFailCode()).data.Codes;
+    const deliFailCode = (await this.api.getDeliFailCode()).data.Codes;
+
+    await this.storage.setDeliFailCode(deliFailCode);
+    await this.storage.setPickupFailCode(pickupFailCode);
+
     this.version = await this.appVersion.getVersionNumber();
     this.courierId = await this.storage.getCourierId();
     this.pickup = {

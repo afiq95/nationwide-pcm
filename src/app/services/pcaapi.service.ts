@@ -60,6 +60,16 @@ export class PCAApiService {
     return await this.axios.get("/api/pickup/userid/" + staffId);
   }
 
+  async getPickupFailCode() {
+    await this.initAxios();
+    return await this.axios.get("/api/pickup/failcode/");
+  }
+
+  async getDeliFailCode() {
+    await this.initAxios();
+    return await this.axios.get("/api/delivery/failcode/");
+  }
+
   async getPickupByRouteCode(routeCode) {
     await this.initAxios();
     return await this.axios.get("/api/pickup/routeCode/" + routeCode);

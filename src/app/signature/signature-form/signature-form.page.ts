@@ -80,18 +80,18 @@ export class SignatureFormPage implements OnInit {
         await delay(1500);
       }
     }
-
-    this.loading.changeText("Uploading Attachment");
-    while (!isUploadedAttachment) {
-      try {
-        attach = await this.uploadAttachment();
-        isUploadedAttachment = true;
-      } catch (error) {
-        this.loading.changeText("Retrying Attachment Upload");
-        await delay(1500);
+    if (this.rawUrl != "") {
+      this.loading.changeText("Uploading Attachment");
+      while (!isUploadedAttachment) {
+        try {
+          attach = await this.uploadAttachment();
+          isUploadedAttachment = true;
+        } catch (error) {
+          this.loading.changeText("Retrying Attachment Upload");
+          await delay(1500);
+        }
       }
     }
-
     const mode = await this.storage.getVehicleMode();
     const courierId = await this.storage.getCourierId();
     const data = this.deliveries.map(x => {

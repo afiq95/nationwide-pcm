@@ -55,6 +55,22 @@ export class LocalStorageService {
     return await this.storage.set(VEHICLEMODE, item);
   }
 
+  async getPickupFailCode() {
+    return await this.storage.get(PICKUPFAILCODE);
+  }
+
+  async getDeliFailCode() {
+    return await this.storage.get(DELIFAILCODE);
+  }
+
+  async setPickupFailCode(item) {
+    return await this.storage.set(PICKUPFAILCODE, item);
+  }
+
+  async setDeliFailCode(item) {
+    return await this.storage.set(DELIFAILCODE, item);
+  }
+
   async getVehicleMode() {
     return await this.storage.get(VEHICLEMODE);
   }
@@ -142,3 +158,5 @@ const DELIVERYROUTE: string = "DELIVERYROUTE";
 const COURIERID: string = "COURIERID";
 const VEHICLEMODE: string = "VEHICLEMODE";
 const REFRESHTOKEN: string = "REFRESHTOKEN";
+const PICKUPFAILCODE: string = "PICKUPFAILCODE";
+const DELIFAILCODE: string = "DELIFAILCODE";

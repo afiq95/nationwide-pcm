@@ -8,6 +8,7 @@ import { BackgroundMode } from "@ionic-native/background-mode/ngx";
 import { FcmService } from "./services/fcm.service";
 import { LocalStorageService } from "./services/local-storage.service";
 import { PCAApiService } from "./services/pcaapi.service";
+import { Keyboard } from "@ionic-native/keyboard/ngx";
 @Component({
   selector: "app-root",
   templateUrl: "app.component.html"
@@ -22,7 +23,8 @@ export class AppComponent {
     private fcm: FcmService,
     private storage: LocalStorageService,
     private api: PCAApiService,
-    private event: Events
+    private event: Events,
+    private keyboard: Keyboard
   ) {
     this.initializeApp();
   }
@@ -89,8 +91,9 @@ export class AppComponent {
           });
         });
       });
-      this.statusBar.hide();
+      // this.statusBar.hide();
       this.statusBar.styleLightContent();
+      this.statusBar.show();
       this.splashScreen.hide();
     });
   }

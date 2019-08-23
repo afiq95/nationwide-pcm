@@ -18,6 +18,7 @@ import { AppVersion } from "@ionic-native/app-version/ngx";
 import { AndroidPermissions } from "@ionic-native/android-permissions/ngx";
 import { QrCodeService } from "./services/qr-code.service";
 import { Camera } from "@ionic-native/camera/ngx";
+import { Keyboard } from "@ionic-native/keyboard/ngx";
 import { BackgroundMode } from "@ionic-native/background-mode/ngx";
 import { FCM } from "@ionic-native/fcm/ngx";
 import { FcmService } from "./services/fcm.service";
@@ -60,7 +61,8 @@ import { Geolocation } from "@ionic-native/geolocation/ngx";
     HereAPIService,
     HTTP,
     Geolocation,
-    AppVersion
+    AppVersion,
+    Keyboard
   ],
   bootstrap: [AppComponent]
 })

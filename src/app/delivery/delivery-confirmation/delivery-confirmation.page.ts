@@ -62,7 +62,7 @@ export class DeliveryConfirmationPage implements OnInit {
   }
 
   async goToSignature() {
-    if (this.cameraUrl == "") {
+    if (this.cameraUrl == "" && this.status == "failed") {
       const alert = await this.alertController.create({
         animated: true,
         message: "Please attach an image",

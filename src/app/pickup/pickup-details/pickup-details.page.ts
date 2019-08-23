@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { NavController, AlertController } from "@ionic/angular";
 import { Camera } from "@ionic-native/camera/ngx";
+import { LocalStorageService } from "src/app/services/local-storage.service";
 
 @Component({
   selector: "app-pickup-details",
@@ -17,45 +18,28 @@ export class PickupDetailsPage implements OnInit {
   status = "";
   cameraUrl: any = "";
   rawUrl: any;
-  allFailCode = [
-    {
-      name: "Office Closed",
-      code: "X06"
-    },
-    {
-      name: "Future Pickup",
-      code: "X14"
-    },
-    {
-      name: "Attempt After Closed Time",
-      code: "X23"
-    },
-    {
-      name: "No Package (RC)",
-      code: "X28"
-    },
-    {
-      name: "No Invoice",
-      code: "X38"
-    },
-    {
-      name: "Vehicle Breakdown",
-      code: "X63"
-    }
-  ];
+  allFailCode = [];
   failCode = "";
   reason = "";
   constructor(
     private navCtrl: NavController,
     private router: Router,
     private camera: Camera,
-    public alertController: AlertController
+    public alertController: AlertController,
+    private storage: LocalStorageService
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     if (this.router.getCurrentNavigation().extras.state)
       this.pickup = this.router.getCurrentNavigation().extras.state.pickup;
-    console.log(this.pickup);
+    this.allFailCode = (await this.storage.getPickupFailCode()).map(x => {
+      return {
+        name: x.Title,
+        code: x.Code,
+        isSignature: x.IsSignatureNeeded,
+        isAttachment: x.IsAttachmentNeeded
+      };
+    });
   }
 
   removeDocCn() {
