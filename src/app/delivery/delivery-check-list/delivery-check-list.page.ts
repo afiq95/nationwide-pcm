@@ -31,12 +31,25 @@ export class DeliveryCheckListPage implements OnInit {
     }
   }
 
-  next() {
-    this.navCtrl.navigateForward("/delivery-confirmation", {
-      state: {
-        items: this.deliveries
-      }
+  async next() {
+    const alert = await this.alertController.create({
+      header: "Warning",
+      message: "Confirm your CN Number",
+      buttons: [
+        {
+          text: "OK",
+          handler: () => {
+            this.navCtrl.navigateForward("/delivery-confirmation", {
+              state: {
+                items: this.deliveries
+              }
+            });
+          }
+        },
+        "Cancel"
+      ]
     });
+    await alert.present();
   }
   removeDelivery(item) {
     const index = this.deliveries.findIndex(x => {
