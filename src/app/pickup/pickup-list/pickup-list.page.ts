@@ -25,8 +25,6 @@ export class PickupListPage implements OnInit {
     private loading: LoadingService,
     private storage: LocalStorageService,
     private callNumber: CallNumber,
-    private hereApi: HereAPIService,
-    private geolocation: Geolocation,
     public alertController: AlertController
   ) {}
   async ngOnInit() {}
