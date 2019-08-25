@@ -18,6 +18,17 @@
   <ion-card mode="ios" color="light">
     <ion-card-header>
       <ion-card-title> Delivery Details </ion-card-title>
+      <ion-card-title>
+        <ion-grid no-padding>
+          <ion-row>
+            <ion-col size="3">Total</ion-col>
+            <ion-col size="2">CN :</ion-col>
+            <ion-col size="2">{{ cnTotal }}</ion-col>
+            <ion-col size="3">PCS : </ion-col>
+            <ion-col size="2">{{ pcsTotal }}</ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-title>
     </ion-card-header>
     <ion-card-content class="ion-no-padding">
       <ion-list>
@@ -31,7 +42,7 @@
         <ion-item *ngIf="status == 'failed'">
           <ion-label position="stacked">Fail Code</ion-label>
           <ion-select multiple="false" [(ngModel)]="failCode" placeholder="Select Fail Code">
-            <ion-select-option *ngFor="let fail of allFailCode" [value]="fail.code">
+            <ion-select-option *ngFor="let fail of allFailCode" [value]="fail">
               {{ fail.code }} - {{ fail.name }}
             </ion-select-option>
           </ion-select>
@@ -61,35 +72,50 @@
             placeholder="Insert notes regarding delivery"
           ></ion-textarea>
         </ion-item>
-        <ion-item lines="none">
+        <ion-item lines="none" *ngIf="failCode?.isAttachment">
           <ion-label>Attachment</ion-label>
         </ion-item>
-        <ion-item lines="none">
+        <ion-item lines="none" *ngIf="failCode?.isAttachment">
           <div class="camera-box" *ngIf="cameraUrl == ''" (click)="openCamera()"></div>
           <ion-img [src]="cameraUrl" *ngIf="cameraUrl != ''"></ion-img>
         </ion-item>
+        <ion-item lines="none" *ngIf="failCode?.isSignature || status == 'success'">
+          <ion-label>Signature</ion-label>
+        </ion-item>
+        <ion-item lines="none" *ngIf="failCode?.isSignature || status == 'success'">
+          <ion-grid>
+            <ion-row>
+              <ion-col size="12">
+                <div style="border: rgba(190,190,190,1) 1px solid;border-radius:15px">
+                  <signature-pad [options]="signaturePadOptions"></signature-pad>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
       </ion-list>
+
       <ion-button
-        class="ion-margin-bottom"
+        class="ion-margin-bottom ion-margin-top"
+        (click)="ValidateFail()"
         fill="solid"
+        *ngIf="status == 'failed'"
         shape="round"
-        (click)="goToSignature()"
         expand="block"
         mode="ios"
         style="margin-left:auto;margin-right:auto;display: block !important;max-width:70%;max-height:30px"
-        *ngIf="status != 'failed'"
       >
-        Signature
+        Done
       </ion-button>
       <ion-button
-        class="ion-margin-bottom"
+        class="ion-margin-bottom ion-margin-top"
+        (click)="ValidateSuccess()"
+        *ngIf="status == 'success'"
         fill="solid"
         shape="round"
-        (click)="done()"
         expand="block"
         mode="ios"
         style="margin-left:auto;margin-right:auto;display: block !important;max-width:70%;max-height:30px"
-        *ngIf="status == 'failed'"
       >
         Done
       </ion-button>

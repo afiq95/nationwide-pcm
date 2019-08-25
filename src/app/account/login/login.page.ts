@@ -6,6 +6,7 @@ import { LocalStorageService } from "src/app/services/local-storage.service";
 import { FcmService } from "src/app/services/fcm.service";
 import { LoadingService } from "src/app/services/loading.service";
 import { AlertController } from "@ionic/angular";
+import { AppVersion } from "@ionic-native/app-version/ngx";
 
 @Component({
   selector: "app-login",
@@ -14,6 +15,7 @@ import { AlertController } from "@ionic/angular";
 })
 export class LoginPage implements OnInit {
   myForm: FormGroup;
+  version = "";
   constructor(
     public formBuilder: FormBuilder,
     private router: Router,
@@ -21,7 +23,8 @@ export class LoginPage implements OnInit {
     private storage: LocalStorageService,
     private fcm: FcmService,
     private loading: LoadingService,
-    public alertController: AlertController
+    public alertController: AlertController,
+    private versionCtrl: AppVersion
   ) {
     this.myForm = this.formBuilder.group({
       Username: ["", Validators.required],
@@ -29,7 +32,10 @@ export class LoginPage implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  async ngOnInit() {
+    this.version = await this.versionCtrl.getVersionNumber();
+    console.log(this.version);
+  }
 
   async Login() {
     await this.loading.PresentLoading();

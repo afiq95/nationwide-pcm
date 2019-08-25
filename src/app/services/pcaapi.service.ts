@@ -3,6 +3,7 @@ import Axios, { AxiosInstance } from "axios";
 import { LocalStorageService } from "./local-storage.service";
 import { environment } from "../../environments/environment";
 import { NavController } from "@ionic/angular";
+import { AppVersion } from "@ionic-native/app-version/ngx";
 @Injectable({
   providedIn: "root"
 })
@@ -10,7 +11,11 @@ export class PCAApiService {
   private axios: AxiosInstance;
   private token: string = "";
 
-  constructor(private storage: LocalStorageService, private navCtrl: NavController) {}
+  constructor(
+    private storage: LocalStorageService,
+    private navCtrl: NavController,
+    private appVersion: AppVersion
+  ) {}
 
   private async initAxios() {
     this.token = await this.storage.getApiToken();
@@ -18,7 +23,8 @@ export class PCAApiService {
       baseURL: BASEURL,
       headers: {
         "content-type": "application/json",
-        Authorization: "Bearer " + this.token
+        Authorization: "Bearer " + this.token,
+        Version: await this.appVersion.getVersionNumber()
       },
       timeout: 15000
     });

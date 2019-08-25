@@ -8,6 +8,7 @@ import { IonicModule } from "@ionic/angular";
 import { PickupDetailsPage } from "./pickup-details.page";
 import { HeaderTrasformDirectiveModule } from "src/app/directive/header-trasform.directive.module";
 import { PcaHeaderComponentModule } from "src/app/components/pca-header/pca-header.module";
+import { SignaturePadModule } from "angular2-signaturepad";
 
 const routes: Routes = [
   {
@@ -23,6 +24,7 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes),
     PcaHeaderComponentModule,
+    SignaturePadModule,
     HeaderTrasformDirectiveModule
   ],
   declarations: [PickupDetailsPage]

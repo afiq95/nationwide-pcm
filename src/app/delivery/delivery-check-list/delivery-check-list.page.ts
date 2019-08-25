@@ -10,6 +10,8 @@ import { BarcodeScanner, BarcodeScanResult } from "@ionic-native/barcode-scanner
 })
 export class DeliveryCheckListPage implements OnInit {
   deliveries: any[] = [];
+  cnTotal = 0;
+  pcsTotal = 0;
   existed: any[] = [];
   searchText = "";
   currentDrs = "";
@@ -28,6 +30,10 @@ export class DeliveryCheckListPage implements OnInit {
       this.deliveries = state.items;
       this.existed = state.existed;
       this.currentDrs = this.deliveries[0].DrsNo;
+      this.cnTotal = this.deliveries.length;
+      this.pcsTotal = this.deliveries.reduce((total, num) => {
+        return total + num.Pieces;
+      }, 0);
     }
   }
 

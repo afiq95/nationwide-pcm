@@ -16,7 +16,17 @@
 <ion-content #scrollArea scrollEvents="true" fullscreen>
   <ion-card color="light" mode="ios">
     <ion-card-header class="ion-no-padding ion-padding-horizontal ion-padding-top">
-      <ion-card-title>Total Item : {{ deliveries.length }}</ion-card-title>
+      <ion-card-title>
+        <ion-grid no-padding>
+          <ion-row>
+            <ion-col size="3">Total</ion-col>
+            <ion-col size="2">CN :</ion-col>
+            <ion-col size="2">{{ cnTotal }}</ion-col>
+            <ion-col size="3">PCS : </ion-col>
+            <ion-col size="2">{{ pcsTotal }}</ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-title>
       <ion-card-subtitle style="color: rgba(189,180,180,1);font-size : 12px">
         Type CN Number from pending list
       </ion-card-subtitle>
