@@ -155,4 +155,8 @@ export class ProfilePage implements OnInit {
       await alert.present();
     }
   }
+
+  async updateProfile(){
+    console.log("Update");
+  }
 }
