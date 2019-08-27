@@ -1,0 +1,131 @@
+<ion-header>
+  <ion-toolbar [myScrollVanish]="scrollArea">
+    <ion-title color="light">Profile</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="onClick()">
+        Log Out
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content #scrollArea scrollEvents="true" fullscreen>
+  <ion-segment
+    style="margin-bottom: 30px;margin-top: 20px"
+    mode="md"
+    color="light"
+    [(ngModel)]="option"
+  >
+    <ion-segment-button value="personal">
+      <ion-label>Personal</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="vehicle">
+      <ion-label>Vehicle</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+  <ng-container *ngIf="option == 'personal'; else elseTemplate">
+    <ion-list>
+      <ion-item>
+        <ion-icon name="business"></ion-icon>
+        <ion-grid no-padding>
+          <ion-row>
+            <ion-col size="12" class="roboto-bold up">Branch Code</ion-col>
+            <ion-col size="12" class="down">PJS</ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="contact"></ion-icon>
+        <ion-grid no-padding>
+          <ion-row>
+            <ion-col size="12" class="roboto-bold up">Name</ion-col>
+            <ion-col size="12" class="down">User Unknown</ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="mail"></ion-icon>
+        <ion-grid no-padding>
+          <ion-row>
+            <ion-col size="12" class="roboto-bold up">Email</ion-col>
+            <ion-col size="12" class="down">user.unknown@gmail.com</ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="call"></ion-icon>
+        <ion-grid no-padding>
+          <ion-row>
+            <ion-col size="12" class="roboto-bold up">Phone Number</ion-col>
+            <ion-col size="12" class="down">012-12392922</ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="phone-portrait"></ion-icon>
+        <ion-grid no-padding>
+          <ion-row>
+            <ion-col size="12" class="roboto-bold up">Version</ion-col>
+            <ion-col size="12" class="down">v1.0.2</ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-list>
+  </ng-container>
+  <ng-template #elseTemplate>
+    <ion-list>
+      <ion-item>
+        <ion-icon name="car"></ion-icon>
+        <ion-grid no-padding>
+          <ion-row>
+            <ion-col size="12" class="roboto-bold up">Mode</ion-col>
+            <ion-col size="12" class="down"
+              ><ion-select
+                [(ngModel)]="vehicleMode"
+                placeholder="Select Vehicle Mode"
+                color="light"
+              >
+                <ion-select-option value="M">Motorcycle</ion-select-option>
+                <ion-select-option value="V">Van</ion-select-option>
+              </ion-select></ion-col
+            >
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="grid"></ion-icon>
+        <ion-grid no-padding>
+          <ion-row>
+            <ion-col size="12" class="roboto-bold up">No Plate</ion-col>
+            <ion-col size="12">
+              <ion-input
+                type="text"
+                [(ngModel)]="plateNo"
+              ></ion-input
+            ></ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="paper-plane"></ion-icon>
+        <ion-grid no-padding>
+          <ion-row>
+            <ion-col size="12" class="roboto-bold up">Delivery Code</ion-col>
+            <ion-col size="12">
+              <ion-input
+                type="text"
+                [(ngModel)]="deliveryCode"
+              ></ion-input
+            ></ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-list>
+  </ng-template>
+</ion-content>
+
+<ion-footer>
+ <ion-button expand="block" (click)="onClick()">
+   Update Profile
+ </ion-button>
+</ion-footer>

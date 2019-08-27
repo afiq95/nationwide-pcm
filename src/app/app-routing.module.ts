@@ -51,7 +51,8 @@ const routes: Routes = [
     loadChildren: "./pickup/pickup-completed/pickup-completed.module#PickupCompletedPageModule"
   },
   { path: "login", loadChildren: "./account/login/login.module#LoginPageModule" },
-  { path: 'view-all', loadChildren: './routeCode/view-all/view-all.module#ViewAllPageModule' }
+  { path: 'view-all', loadChildren: './routeCode/view-all/view-all.module#ViewAllPageModule' },  { path: 'profile', loadChildren: './account/profile/profile.module#ProfilePageModule' }
+
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })],

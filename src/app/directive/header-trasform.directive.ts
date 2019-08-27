@@ -40,6 +40,7 @@ export class HeaderTrasformDirective {
 
   hide() {
     this.domCtrl.write(() => {
+      debugger;
       this.renderer.setStyle(this.element.nativeElement, "background", "white");
       this.element.nativeElement.querySelectorAll("ion-title")[0].setAttribute("color", "dark");
       this.element.nativeElement
@@ -53,7 +54,7 @@ export class HeaderTrasformDirective {
 
   show() {
     this.domCtrl.write(() => {
-      this.renderer.setStyle(this.element.nativeElement, "background", "rgba(0,0,0,0)");
+      this.renderer.setStyle(this.element.nativeElement, "background", "rgba(237, 27, 36,1)");
       this.element.nativeElement.querySelectorAll("ion-title")[0].setAttribute("color", "light");
       this.element.nativeElement
         .querySelectorAll("ion-buttons")[0]

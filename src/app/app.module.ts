@@ -39,7 +39,7 @@ import { Geolocation } from "@ionic-native/geolocation/ngx";
     DeclinePickupFormPageModule,
     IonicStorageModule.forRoot({
       name: "__mydb",
-      driverOrder: ["indexeddb", "sqlite", "websql"]
+      driverOrder: ["indexeddb", "websql", "sqlite"]
     })
   ],
   providers: [

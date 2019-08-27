@@ -108,7 +108,72 @@ export class DeliveryListPage {
         await delay(1500);
       }
     }
-
+    this.deliveries.push({
+      CnNo: "BBBBBBBB",
+      Pieces: "10",
+      DrsNo:"BBBBBBBBB",
+      CustomerNo:"BBBBBB"
+    },)
+    this.deliveries.push({
+      CnNo: "BBBBBBBB",
+      Pieces: "10",
+      DrsNo:"BBBBBBBBB",
+      CustomerNo:"BBBBBB"
+    },)
+    this.deliveries.push({
+      CnNo: "BBBBBBBB",
+      Pieces: "10",
+      DrsNo:"BBBBBBBBB",
+      CustomerNo:"BBBBBB"
+    },)
+    this.deliveries.push({
+      CnNo: "BBBBBBBB",
+      Pieces: "10",
+      DrsNo:"BBBBBBBBB",
+      CustomerNo:"BBBBBB"
+    },)
+    this.deliveries.push({
+      CnNo: "BBBBBBBB",
+      Pieces: "10",
+      DrsNo:"BBBBBBBBB",
+      CustomerNo:"BBBBBB"
+    },)
+    this.deliveries.push({
+      CnNo: "BBBBBBBB",
+      Pieces: "10",
+      DrsNo:"BBBBBBBBB",
+      CustomerNo:"BBBBBB"
+    },)
+    this.deliveries.push({
+      CnNo: "BBBBBBBB",
+      Pieces: "10",
+      DrsNo:"BBBBBBBBB",
+      CustomerNo:"BBBBBB"
+    },)
+    this.deliveries.push({
+      CnNo: "BBBBBBBB",
+      Pieces: "10",
+      DrsNo:"BBBBBBBBB",
+      CustomerNo:"BBBBBB"
+    },)
+    this.deliveries.push({
+      CnNo: "BBBBBBBB",
+      Pieces: "10",
+      DrsNo:"BBBBBBBBB",
+      CustomerNo:"BBBBBB"
+    },)
+    this.deliveries.push({
+      CnNo: "BBBBBBBB",
+      Pieces: "10",
+      DrsNo:"BBBBBBBBB",
+      CustomerNo:"BBBBBB"
+    },)
+    this.deliveries.push({
+      CnNo: "BBBBBBBB",
+      Pieces: "10",
+      DrsNo:"BBBBBBBBB",
+      CustomerNo:"BBBBBB"
+    },)
     await this.loading.Dismiss();
   }
 
