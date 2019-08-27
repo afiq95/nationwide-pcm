@@ -40,7 +40,6 @@ export class HeaderTrasformDirective {
 
   hide() {
     this.domCtrl.write(() => {
-      debugger;
       this.renderer.setStyle(this.element.nativeElement, "background", "white");
       this.element.nativeElement.querySelectorAll("ion-title")[0].setAttribute("color", "dark");
       this.element.nativeElement
