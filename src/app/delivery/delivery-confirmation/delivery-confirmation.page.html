@@ -33,15 +33,15 @@
     <ion-card-content class="ion-no-padding">
       <ion-list>
         <ion-item>
-          <ion-label position="stacked">Delivery Code</ion-label>
-          <ion-select multiple="false" [(ngModel)]="status" placeholder="Select Delivery Code">
+          <ion-label position="floating" style="color:red">Delivery Code</ion-label>
+          <ion-select multiple="false" [(ngModel)]="status">
             <ion-select-option value="success">Successful</ion-select-option>
             <ion-select-option value="failed">Failed</ion-select-option>
           </ion-select>
         </ion-item>
         <ion-item *ngIf="status == 'failed'">
-          <ion-label position="stacked">Fail Code</ion-label>
-          <ion-select multiple="false" [(ngModel)]="failCode" placeholder="Select Fail Code">
+          <ion-label position="floating" style="color:red">Fail Code</ion-label>
+          <ion-select multiple="false" [(ngModel)]="failCode">
             <ion-select-option *ngFor="let fail of allFailCode" [value]="fail">
               {{ fail.code }} - {{ fail.name }}
             </ion-select-option>
@@ -64,8 +64,8 @@
             placeholder="Insert Receiver Identification Number"
           ></ion-input>
         </ion-item>
-        <ion-item>
-          <ion-label position="stacked">Notes</ion-label>
+        <ion-item *ngIf="status == 'success' || status == 'failed'">
+          <ion-label position="stacked" >Notes</ion-label>
           <ion-textarea
             type="text"
             [(ngModel)]="note"

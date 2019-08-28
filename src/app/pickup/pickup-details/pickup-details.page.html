@@ -57,15 +57,15 @@
     <ion-card-content class="ion-no-padding ion-padding-bottom">
       <ion-list class="ion-no-padding">
         <ion-item>
-          <ion-label position="stacked">Pickup Code</ion-label>
-          <ion-select multiple="false" placeholder="Select Pickup Status" [(ngModel)]="status">
+          <ion-label position="floating" style="color:red">Pickup Code</ion-label>
+          <ion-select multiple="false" [(ngModel)]="status">
             <ion-select-option value="success">Successful</ion-select-option>
             <ion-select-option value="failed">Failed</ion-select-option>
           </ion-select>
         </ion-item>
         <ion-item *ngIf="status == 'failed'">
-          <ion-label position="stacked">Fail Code</ion-label>
-          <ion-select multiple="false" [(ngModel)]="failCode" placeholder="Select Fail Code">
+          <ion-label position="floating" style="color:red">Fail Code</ion-label>
+          <ion-select multiple="false" [(ngModel)]="failCode">
             <ion-select-option *ngFor="let fail of allFailCode" [value]="fail">
               {{ fail.code }} - {{ fail.name }}
             </ion-select-option>
