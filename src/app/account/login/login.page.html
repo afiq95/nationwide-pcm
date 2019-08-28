@@ -20,9 +20,11 @@
             <ion-input
               formControlName="Password"
               clearInput
-              type="password"
+              [type]="passwordType"
               placeholder="Password"
+              clearOnEdit="false"
             ></ion-input>
+            <ion-icon slot="end" [name]="passwordIcon" class="passwordIcon" (click)="hideShowPassword()"></ion-icon>
           </ion-item>
         </ion-list>
         <ion-list class="ion-padding login-form-buttons" style="width: 100%">

@@ -16,6 +16,9 @@ import { AppVersion } from "@ionic-native/app-version/ngx";
 export class LoginPage implements OnInit {
   myForm: FormGroup;
   version = "";
+  passwordType: string = 'password';
+  passwordIcon: string = 'eye-off';
+
   constructor(
     public formBuilder: FormBuilder,
     private router: Router,
@@ -35,6 +38,11 @@ export class LoginPage implements OnInit {
   async ngOnInit() {
     this.version = await this.versionCtrl.getVersionNumber();
     console.log(this.version);
+  }
+
+  async hideShowPassword(){
+    this.passwordType = this.passwordType === 'text' ? 'password' : 'text';
+    this.passwordIcon = this.passwordIcon === 'eye-off' ? 'eye' : 'eye-off';
   }
 
   async Login() {
