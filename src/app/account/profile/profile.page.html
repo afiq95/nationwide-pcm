@@ -10,12 +10,7 @@
 </ion-header>
 
 <ion-content #scrollArea scrollEvents="true" fullscreen>
-  <ion-segment
-    style="margin-bottom: 0px;margin-top: -15px"
-    mode="md"
-    color="light"
-    [(ngModel)]="option"
-  >
+  <ion-segment color="light" [(ngModel)]="option">
     <ion-segment-button value="personal">
       <ion-label>Personal</ion-label>
     </ion-segment-button>
@@ -29,8 +24,8 @@
         <ion-icon name="business"></ion-icon>
         <ion-grid no-padding>
           <ion-row>
-            <ion-col size="12" class="roboto-bold up">Branch Code</ion-col>
-            <ion-col size="12" class="down">PJS</ion-col>
+            <ion-col size="12" class="up">Branch Code</ion-col>
+            <ion-col size="12" class="roboto-semi-bold down">PJS</ion-col>
           </ion-row>
         </ion-grid>
       </ion-item>
@@ -38,8 +33,8 @@
         <ion-icon name="contact"></ion-icon>
         <ion-grid no-padding>
           <ion-row>
-            <ion-col size="12" class="roboto-bold up">Name</ion-col>
-            <ion-col size="12" class="down">User Unknown</ion-col>
+            <ion-col size="12" class="up">Name</ion-col>
+            <ion-col size="12" class="roboto-semi-bold down">User Unknown</ion-col>
           </ion-row>
         </ion-grid>
       </ion-item>
@@ -47,8 +42,8 @@
         <ion-icon name="mail"></ion-icon>
         <ion-grid no-padding>
           <ion-row>
-            <ion-col size="12" class="roboto-bold up">Email</ion-col>
-            <ion-col size="12" class="down">user.unknown@gmail.com</ion-col>
+            <ion-col size="12" class="up">Email</ion-col>
+            <ion-col size="12" class="roboto-semi-bold down">user.unknown@gmail.com</ion-col>
           </ion-row>
         </ion-grid>
       </ion-item>
@@ -56,8 +51,8 @@
         <ion-icon name="call"></ion-icon>
         <ion-grid no-padding>
           <ion-row>
-            <ion-col size="12" class="roboto-bold up">Phone Number</ion-col>
-            <ion-col size="12" class="down">012-12392922</ion-col>
+            <ion-col size="12" class="up">Phone Number</ion-col>
+            <ion-col size="12" class="roboto-semi-bold down">012-12392922</ion-col>
           </ion-row>
         </ion-grid>
       </ion-item>
@@ -65,8 +60,8 @@
         <ion-icon name="phone-portrait"></ion-icon>
         <ion-grid no-padding>
           <ion-row>
-            <ion-col size="12" class="roboto-bold up">Version</ion-col>
-            <ion-col size="12" class="down">v1.0.2</ion-col>
+            <ion-col size="12" class="up">Version</ion-col>
+            <ion-col size="12" class="roboto-semi-bold down">v1.0.2</ion-col>
           </ion-row>
         </ion-grid>
       </ion-item>
@@ -78,8 +73,8 @@
         <ion-icon name="car"></ion-icon>
         <ion-grid no-padding>
           <ion-row>
-            <ion-col size="12" class="roboto-bold up">Mode</ion-col>
-            <ion-col size="12" class="down"
+            <ion-col size="12" class="up">Mode</ion-col>
+            <ion-col size="12" class="roboto-semi-bold down"
               ><ion-select
                 [(ngModel)]="vehicleMode"
                 placeholder="Select Vehicle Mode"
@@ -96,90 +91,87 @@
         <ion-icon name="grid"></ion-icon>
         <ion-grid no-padding>
           <ion-row>
-            <ion-col size="12" class="roboto-bold up">No Plate</ion-col>
+            <ion-col size="12" class="up">No Plate</ion-col>
             <ion-col size="12">
-              <ion-input
-                type="text"
-                [(ngModel)]="plateNo"
-              ></ion-input
+              <ion-input class="roboto-semi-bold" type="text" [(ngModel)]="plateNo"></ion-input
             ></ion-col>
           </ion-row>
         </ion-grid>
       </ion-item>
     </ion-list>
     <ion-list class="ion-margin-top">
-        <ion-list-header>
-          <ion-grid no-padding>
-            <ion-row class="ion-align-items-center">
-              <ion-col size="6" class="ion-text-left">
-                <h5>
-                  <ion-label>Pickup Routing</ion-label>
-                </h5>
-              </ion-col>
-              <ion-col size="6" class="ion-text-right">
-                <ion-button (click)="addPickupRouting()" fill="clear" size="small">
-                  <ion-icon slot="icon-only" name="add"></ion-icon>
-                </ion-button>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </ion-list-header>
-        <ion-item *ngFor="let pickup of pickupRouting">
-          <ion-label class="ion-float-right">
-            {{ pickup.RouteCode }}
-          </ion-label>
-          <ion-button
-            (click)="removePickupRouting(pickup)"
-            fill="clear"
-            color="dark"
-            class="ion-float-right"
-          >
-            <ion-icon slot="icon-only" name="close"></ion-icon>
-          </ion-button>
-        </ion-item>
-        <ion-item *ngIf="pickupRouting.length == 0">
-          <ion-label>No Pickup Routing Code</ion-label>
-        </ion-item>
-      </ion-list>
-      <ion-list class="ion-margin-top">
-        <ion-list-header>
-          <ion-grid no-padding>
-            <ion-row class="ion-align-items-center">
-              <ion-col size="6" class="ion-text-left">
-                <h5>
-                  <ion-label>Delivery Routing</ion-label>
-                </h5>
-              </ion-col>
-              <ion-col size="6" class="ion-text-right">
-                <ion-button (click)="addDeliveryRouting()" fill="clear" size="small">
-                  <ion-icon slot="icon-only" name="add"></ion-icon>
-                </ion-button>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </ion-list-header>
-        <ion-item *ngFor="let delivery of deliveryRouting">
-          <ion-label class="ion-float-right">
-            {{ delivery.RouteCode }}
-          </ion-label>
-          <ion-button
-            (click)="removeDeliveryRouting(delivery)"
-            fill="clear"
-            color="dark"
-            class="ion-float-right"
-          >
-            <ion-icon slot="icon-only" name="close"></ion-icon>
-          </ion-button>
-        </ion-item>
-        <ion-item *ngIf="deliveryRouting.length == 0">
-          <ion-label>No Delivery Routing Code</ion-label>
-        </ion-item>
-      </ion-list>
+      <ion-list-header>
+        <ion-grid no-padding>
+          <ion-row class="ion-align-items-center">
+            <ion-col size="6" class="ion-text-left">
+              <h5>
+                <ion-label>Pickup Routing</ion-label>
+              </h5>
+            </ion-col>
+            <ion-col size="6" class="ion-text-right">
+              <ion-button (click)="addPickupRouting()" fill="clear" size="small">
+                <ion-icon slot="icon-only" name="add"></ion-icon>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-list-header>
+      <ion-item *ngFor="let pickup of pickupRouting">
+        <ion-label class="ion-float-right">
+          {{ pickup.RouteCode }}
+        </ion-label>
+        <ion-button
+          (click)="removePickupRouting(pickup)"
+          fill="clear"
+          color="dark"
+          class="ion-float-right"
+        >
+          <ion-icon slot="icon-only" name="close"></ion-icon>
+        </ion-button>
+      </ion-item>
+      <ion-item *ngIf="pickupRouting.length == 0">
+        <ion-label>No Pickup Routing Code</ion-label>
+      </ion-item>
+    </ion-list>
+    <ion-list class="ion-margin-top">
+      <ion-list-header>
+        <ion-grid no-padding>
+          <ion-row class="ion-align-items-center">
+            <ion-col size="6" class="ion-text-left">
+              <h5>
+                <ion-label>Delivery Routing</ion-label>
+              </h5>
+            </ion-col>
+            <ion-col size="6" class="ion-text-right">
+              <ion-button (click)="addDeliveryRouting()" fill="clear" size="small">
+                <ion-icon slot="icon-only" name="add"></ion-icon>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-list-header>
+      <ion-item *ngFor="let delivery of deliveryRouting">
+        <ion-label class="ion-float-right">
+          {{ delivery.RouteCode }}
+        </ion-label>
+        <ion-button
+          (click)="removeDeliveryRouting(delivery)"
+          fill="clear"
+          color="dark"
+          class="ion-float-right"
+        >
+          <ion-icon slot="icon-only" name="close"></ion-icon>
+        </ion-button>
+      </ion-item>
+      <ion-item *ngIf="deliveryRouting.length == 0">
+        <ion-label>No Delivery Routing Code</ion-label>
+      </ion-item>
+    </ion-list>
   </ng-template>
 </ion-content>
 
 <ion-footer>
- <ion-button expand="block" (click)="updateProfile()">
-   Update Profile
- </ion-button>
+  <ion-button expand="block" (click)="updateProfile()">
+    Update Profile
+  </ion-button>
 </ion-footer>
