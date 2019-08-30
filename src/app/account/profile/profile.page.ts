@@ -1,8 +1,8 @@
 import { Component, OnInit } from "@angular/core";
-import { AlertController } from '@ionic/angular';
-import { alertController } from '@ionic/core';
-import { LocalStorageService } from 'src/app/services/local-storage.service';
-import { PCAApiService } from 'src/app/services/pcaapi.service';
+import { AlertController, ToastController } from "@ionic/angular";
+import { alertController } from "@ionic/core";
+import { LocalStorageService } from "src/app/services/local-storage.service";
+import { PCAApiService } from "src/app/services/pcaapi.service";
 
 @Component({
   selector: "app-profile",
@@ -13,14 +13,15 @@ export class ProfilePage implements OnInit {
   option = "personal";
   vehicleMode = "M";
   plateNo = "WJS 5555";
-  deliveryCode="shav 43";
+  deliveryCode = "shav 43";
   pickupRouting: any[] = [];
   deliveryRouting: any[] = [];
 
   constructor(
     public alertController: AlertController,
     private api: PCAApiService,
-    private storage: LocalStorageService
+    private storage: LocalStorageService,
+    private toast: ToastController
   ) {}
 
   async ngOnInit() {
@@ -42,24 +43,34 @@ export class ProfilePage implements OnInit {
       ],
       buttons: [
         {
-          text: "Add",
-          handler: async item => {
-            var data: any = {
-              RouteCode: item.pickupCode,
-              IsPickupCode: true,
-              IsDeliveryCode: false,
-              IsExpired: false,
-              StaffId: await this.storage.getStaffId()
-            };
-            const res = await this.api.InsertRoutingCode(data);
-            data.Id = res.data.Id;
-            await this.storage.addPickupRouting(data);
-            this.pickupRouting = await this.storage.getPickupRouting();
-          }
-        },
-        {
           text: "Cancel",
           role: "cancel"
+        },
+        {
+          text: "Add",
+          handler: async item => {
+            const regex = /[a-zA-Z]{4}[0-9][0-9]/;
+            if (!item.pickupCode.match(regex)) {
+              const toast = await this.toast.create({
+                message: "Please insert delivery code",
+                duration: 3000
+              });
+              toast.present();
+              await this.addPickupRouting();
+            } else {
+              var data: any = {
+                RouteCode: item.pickupCode,
+                IsPickupCode: true,
+                IsDeliveryCode: false,
+                IsExpired: false,
+                StaffId: await this.storage.getStaffId()
+              };
+              const res = await this.api.InsertRoutingCode(data);
+              data.Id = res.data.Id;
+              await this.storage.addPickupRouting(data);
+              this.pickupRouting = await this.storage.getPickupRouting();
+            }
+          }
         }
       ]
     });
@@ -81,24 +92,34 @@ export class ProfilePage implements OnInit {
       ],
       buttons: [
         {
-          text: "Add",
-          handler: async item => {
-            var data: any = {
-              RouteCode: item.deliCode,
-              IsPickupCode: false,
-              IsDeliveryCode: true,
-              IsExpired: false,
-              StaffId: await this.storage.getStaffId()
-            };
-            const res = await this.api.InsertRoutingCode(data);
-            data.Id = res.data.Id;
-            await this.storage.addDeliveryRouting(data);
-            this.deliveryRouting = await this.storage.getDeliveryRouting();
-          }
-        },
-        {
           text: "Cancel",
           role: "cancel"
+        },
+        {
+          text: "Add",
+          handler: async item => {
+            const regex = /[a-zA-Z]{4}[0-9][0-9]/;
+            if (!item.deliCode.match(regex)) {
+              const toast = await this.toast.create({
+                message: "Please insert delivery code",
+                duration: 3000
+              });
+              toast.present();
+              await this.addPickupRouting();
+            } else {
+              var data: any = {
+                RouteCode: item.deliCode,
+                IsPickupCode: false,
+                IsDeliveryCode: true,
+                IsExpired: false,
+                StaffId: await this.storage.getStaffId()
+              };
+              const res = await this.api.InsertRoutingCode(data);
+              data.Id = res.data.Id;
+              await this.storage.addDeliveryRouting(data);
+              this.deliveryRouting = await this.storage.getDeliveryRouting();
+            }
+          }
         }
       ]
     });
@@ -156,7 +177,7 @@ export class ProfilePage implements OnInit {
     }
   }
 
-  async updateProfile(){
+  async updateProfile() {
     console.log("Update");
   }
 }
