@@ -18,6 +18,7 @@ export class PickupListPage implements OnInit {
   pickups = [];
   pendings = [];
   completed = [];
+  isR = false;
   constructor(
     public modalController: ModalController,
     private api: PCAApiService,
@@ -56,6 +57,26 @@ export class PickupListPage implements OnInit {
         });
         this.pickups.push(...data);
       }
+
+      this.pickups.push({
+        CustomerType:"A",
+        PickupId:"12231320",
+        CustomerNumber: "106031",
+        CustomerName: "DEWAN PERNIAGAAN MELAYU MALAYSIA",
+        ContactName: "NORHAYATI MD ALI/ AZIZAH",
+        TelephoneNumber: "03-26332233",
+        Address: "NO 22 JLN BRUAS BUKIT DAMANSARA, KL"
+      },
+      {
+        CustomerType:"R",
+        PickupId:"12231320",
+        CustomerNumber: "106031",
+        CustomerName: "DEWAN PERNIAGAAN MELAYU MALAYSIA",
+        ContactName: "NORHAYATI MD ALI/ AZIZAH",
+        TelephoneNumber: "03-26332233",
+        Address: "NO 22 JLN BRUAS BUKIT DAMANSARA, KL"
+      }
+      )
 
       this.pendings = this.pickups.filter(x => {
         return !x.IsCompleted;

@@ -10,20 +10,28 @@
       <ion-item lines="full" *ngFor="let pickup of pendings">
         <ion-grid no-padding>
           <ion-row class="ion-align-items-center">
-            <ion-col size="7" class="ion-text-left">
+            <ion-col size="4" class="ion-text-left">
               <ion-label class="font-20">
                 {{ pickup.PickupId }}
               </ion-label>
             </ion-col>
-            <ion-col size="5" class="ion-text-right" style="margin-top: -4px">
+            <ion-col size="4" class="ion-text-center">
+              <span class="text" [ngStyle]="{color: pickup.CustomerType == 'R' ? 'red' : 'blue'}">
+                <b>{{pickup.CustomerType}}</b>
+              </span>
+            </ion-col>
+            <ion-col size="4" class="ion-text-right" style="margin-top: -4px">
               <ion-icon class="icon " name="time" mode="md"></ion-icon>
               <span class="text" [ngStyle]="{ color: pickup.isLate ? 'red' : 'black' }">
                 {{ pickup.DateTimeClosed | date: "hh:mm aa" }}
               </span>
             </ion-col>
-            <ion-col size="12">
+            <ion-col size="4">
               <ion-icon class="icon grey" name="at" mode="ios"></ion-icon>
               <span class="text grey roboto-light">{{ pickup.CustomerNumber }}</span>
+            </ion-col>
+            <ion-col size="8">
+                <span class="text grey roboto-light">VS CONCEPT FURNITURE SDN BHD</span>
             </ion-col>
             <ion-col size="1">
               <ion-icon class="icon grey" name="business" mode="ios"></ion-icon>
